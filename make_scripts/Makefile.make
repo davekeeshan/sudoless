@@ -1,0 +1,52 @@
+MAKE_REPO       := https://git.savannah.gnu.org/git/make.git
+MAKE_REV        ?= 4.3
+MAKE_INSTALL    := ${INSTALL_DIR}/make/${MAKE_REV}
+MAKE_DIR        := ${DOWNLOAD_DIR}/make-git
+
+make_clean:
+	rm -rf ${MAKE_INSTALL}
+
+make: mkdir_install | ${MAKE_INSTALL}
+
+${MAKE_INSTALL}:
+ifeq (${SYSTEM_MAKE}, 0)
+	@echo "Folder ${MAKE_INSTALL} does not exist"
+	curl https://ftp.gnu.org/gnu/make/make-${MAKE_REV}.tar.gz -o ${DOWNLOAD_DIR}/make-${MAKE_REV}.tar.gz
+	cd ${DOWNLOAD_DIR}; tar -zxvf make-${MAKE_REV}.tar.gz
+	cd ${DOWNLOAD_DIR}/make-${MAKE_REV}; \
+		./configure --prefix=${MAKE_INSTALL}; \
+		make clean; \
+		make; \
+		make install
+	ln -s ${MAKE_INSTALL}/bin/make ${MAKE_INSTALL}/bin/gmake
+else
+	@echo "Using System MAKE"
+endif
+
+# ${MAKE_DIR}: 
+# 	@echo "Folder ${MAKE_DIR} does not exist"
+# 	git clone ${MAKE_REPO} ${MAKE_DIR}
+# 
+# ${MAKE_INSTALL}: | ${MAKE_DIR}
+# 	@echo "Folder ${MAKE_INSTALL} does not exist"
+# 	if [ "${MAKE_REV}" = "" ]; then \
+# 		cd ${MAKE_DIR}; \
+# 			git fetch; \
+#         	git checkout -f master;\
+# 	else \
+# 		cd ${MAKE_DIR}; \
+# 			git fetch; \
+#         	git checkout -f ${MAKE_REV};\
+#     fi
+# 	cd ${MAKE_DIR}; \
+# 		export PATH=${TEXINFO_INSTALL}/bin:${PATH}; \
+# 		./bootstrap; \
+# 		./configure --prefix=${MAKE_INSTALL}; \
+# 		make clean; \
+# 		make; \
+# 		make install
+# 	ln -s ${MAKE_INSTALL}/bin/make ${MAKE_INSTALL}/bin/gmake
+# 	$(MAKE) make_link
+
+make_link:
+	ln -fs $(shell ls ${MAKE_INSTALL}/bin/*) ${INSTALL_DIR}/local/bin/.

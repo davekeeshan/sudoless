@@ -1,0 +1,79 @@
+name: Test Install of iverilog
+
+on: 
+  push: 
+  pull_request:
+#   schedule:
+#     - cron: '0 1 * * 0'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  setup_environment:
+    strategy:
+      fail-fast: false # So that one fail doesn't stop remaining tests
+      matrix:
+#        os: [ubuntu-latest, ubuntu-22.04]
+        os: [self-hosted]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup basic env
+        run: |
+          echo "INSTALL_DIR=/home/gomez/github/actions-runner/local/tools" >> $GITHUB_ENV
+          echo "DOWNLOAD_DIR=/home/gomez/github/actions-runner/local/downloads" >> $GITHUB_ENV
+#       - name: iverilog defaults to system first
+#         run: |
+#           make iverilog report_paths
+      - name: Add to Environment Variables
+        run: |
+          IVERILOG_INSTALL_DIR=`make iverilog_install`
+          echo "${IVERILOG_INSTALL_DIR}/bin" >> $GITHUB_PATH
+          echo "IVERILOG_INSTALL_DIR=${IVERILOG_INSTALL_DIR}" >> $GITHUB_ENV
+          IVERILOG_INSTALL_DIR=`make verilator_install`
+          echo "${VERILATOR_INSTALL_DIR}/bin" >> $GITHUB_PATH
+          echo "VERILATOR_INSTALL_DIR=${VERILATOR_INSTALL_DIR}" >> $GITHUB_ENV
+          VERILATOR_INSTALL_DIR=`make verible_install`
+          echo "${VERIBLE_INSTALL_DIR}/bin" >> $GITHUB_PATH
+          echo "VERIBLE_INSTALL_DIR=${VERIBLE_INSTALL_DIR}" >> $GITHUB_ENV
+#       - name: Test that nothing was installed
+#         run: |
+#           FILEPATH=`which iverilog` 
+#           echo ${FILEPATH}
+#           if [ "/usr/bin/iverilog" != ${FILEPATH} ]; then
+#             echo "Incorrect version of exec returned";
+#             exit 1 ;
+#           fi
+      - name: Make report_paths 
+        run: |
+          make report_paths
+      - name: Make iverilog 
+        run: |
+          make iverilog
+      - name: Test Install Successful
+        run: |
+          FILEPATH=`which iverilog` 
+          echo ${FILEPATH}
+          if [ "${IVERILOG_INSTALL_DIR}/bin/iverilog" != ${FILEPATH} ]; then
+            echo "Incorrect version of exec returned";
+            exit 1 ;
+          fi
+          iverilog --version
+      - name: Remove iverilog 
+        run: |
+          make iverilog_clean
+      - name: Make verilator 
+        run: |
+          make verilator
+      - name: Make verible 
+        run: |
+          make verible
+#       - name: Test Uninstall was successful
+#         run: |
+#           FILEPATH=`which iverilog` 
+#           echo ${FILEPATH}
+#           if [ "/usr/bin/iverilog" != ${FILEPATH} ]; then
+#             echo "Incorrect version of exec returned";
+#             exit 1 ;
+#           fi

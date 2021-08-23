@@ -1,0 +1,71 @@
+name: Test Install of gcc
+
+on: 
+#   push: 
+#   pull_request:
+#   schedule:
+#     - cron: '0 1 * * 0'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  setup_environment:
+    strategy:
+      fail-fast: false # So that one fail doesn't stop remaining tests
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: gcc defaults to system first
+        run: |
+          make gcc report_paths
+      - name: Add to Environment Variables
+        run: |
+          GITHUB_INSTALL_DIR=`make gcc_install`
+          echo "${GITHUB_INSTALL_DIR}/bin" >> $GITHUB_PATH
+          echo "GITHUB_INSTALL_DIR=${GITHUB_INSTALL_DIR}" >> $GITHUB_ENV
+          sudo apt update
+          sudo apt install gnat
+      - name: Test that nothing was installed
+        run: |
+          FILEPATH=`which gcc` 
+          echo ${FILEPATH}
+          if [ "/usr/bin/gcc" != ${FILEPATH} ]; then
+            echo "Incorrect version of exec returned";
+            exit 1 ;
+          fi
+      - name: Make gcc 
+        run: |
+          make gcc SYSTEM_GCC=0 report_paths
+      - name: Test Install Successful
+        run: |
+          FILEPATH=`which gcc` 
+          echo ${FILEPATH}
+          if [ "${GITHUB_INSTALL_DIR}/bin/gcc" != ${FILEPATH} ]; then
+            echo "Incorrect version of exec returned";
+            exit 1 ;
+          fi
+#       - name: Remove gcc 
+#         run: |
+#           make gcc_clean
+#       - name: Test Uninstall was successful
+#         run: |
+#           FILEPATH=`which gcc` 
+#           echo ${FILEPATH}
+#           if [ "/usr/bin/gcc" != ${FILEPATH} ]; then
+#             echo "Incorrect version of exec returned";
+#             exit 1 ;
+#           fi
+#       - name: Make gcc (again)
+#         run: |
+#           make gcc SYSTEM_GCC=0 report_paths
+#       - name: Test Install Successful (again)
+#         run: |
+#           FILEPATH=`which gcc` 
+#           echo ${FILEPATH}
+#           if [ "${GITHUB_INSTALL_DIR}/bin/gcc" != ${FILEPATH} ]; then
+#             echo "Incorrect version of exec returned";
+#             exit 1 ;
+#           fi
