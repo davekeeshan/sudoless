@@ -5,44 +5,13 @@ VENV_DIR       ?= ${HOME}/local/venv
 DOWNLOAD_DIR   ?= ${CWD}/downloads
 SCRIPTS_DIR    ?= ${CWD}
 PROCESSOR      ?= 8
-SYSTEM_GCC     ?= 1
-#SYSTEM_MAKE    ?= 1
-#SYSTEM_BASH    ?= 1
-#SYSTEM_GIT     ?= 1
-#SYSTEM_CURL    ?= 1
-#SYSTEM_PERL    ?= 1
-SYSTEM_PYTHON  ?= 1
 
+#LD_LIBRARY_PATH := ""
 
 include ${SCRIPTS_DIR}/*.mak
 
 LD_LIBRARY_PATH := ${INSTALL_DIR}/local/lib:${LD_LIBRARY_PATH}
-ifeq ($(SYSTEM_GCC), 0)
-	PATH := $(GCC_INSTALL)/bin:${PATH}
-	LD_LIBRARY_PATH := $(GCC_INSTALL)/lib64:${LD_LIBRARY_PATH}
-endif
-# ifeq ($(SYSTEM_MAKE), 0)
-# 	PATH := $(MAKE_INSTALL)/bin:${PATH}
-# endif
-# ifeq ($(SYSTEM_BASH), 0)
-# 	PATH := $(BASH_INSTALL)/bin:${PATH}
-# endif
-# ifeq ($(SYSTEM_GIT), 0)
-# 	PATH := $(GIT_INSTALL)/bin:${PATH}
-# endif
-# ifeq ($(SYSTEM_CURL), 0)
-# 	PATH := $(CURL_INSTALL)/bin:${PATH}
-# endif
-# ifeq ($(SYSTEM_PERL), 0)
-# 	PATH := $(PERL_INSTALL)/bin:${PATH}
-# endif
-ifeq ($(SYSTEM_PYTHON), 0)
-	PATH := $(PYTHON_INSTALL)/bin:${PATH}
-	LD_LIBRARY_PATH := $(PYTHON_INSTALL)/lib:${LD_LIBRARY_PATH}
-# else
-# 	LD_LIBRARY_PATH := /projects/flow/tools/x86_64-rocky8/python/v3.10.7/lib:${LD_LIBRARY_PATH}
-# 	#LD_LIBRARY_PATH := $(shell which python)/../../lib:${LD_LIBRARY_PATH}
-endif
+
 export LD_LIBRARY_PATH
 
 mkdir_install:

@@ -5,6 +5,15 @@ PYTHON_INSTALL    := ${INSTALL_DIR}/python/${PYTHON_REV}
 PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
 PYTHON_REPO       := https://github.com/python/cpython.git
 VENV_PATH         := ${CWD}/.venv_python/${OSID}
+SYSTEM_PYTHON     ?= 1
+
+ifeq ($(SYSTEM_PYTHON), 0)
+	PATH := $(PYTHON_INSTALL)/bin:${PATH}
+	LD_LIBRARY_PATH := $(PYTHON_INSTALL)/lib:${LD_LIBRARY_PATH}
+# else
+# 	LD_LIBRARY_PATH := /projects/flow/tools/x86_64-rocky8/python/v3.10.7/lib:${LD_LIBRARY_PATH}
+# 	#LD_LIBRARY_PATH := $(shell which python)/../../lib:${LD_LIBRARY_PATH}
+endif
 
 pydeactivate:
 	rm -rf ${VENV_PATH}
@@ -63,7 +72,6 @@ ifeq (${SYSTEM_PYTHON}, 0)
             --enable-optimizations \
             --with-computed-gotos=yes \
             --with-dbmliborder=gdbm:ndbm:bdb \
-            --with-system-expat \
             --enable-loadable-sqlite-extensions \
 			--without-static-libpython\
 			--with-system-ffi=${LIBFFI_INSTALL}/lib64;\
@@ -84,3 +92,4 @@ python_link:
 #   --with-libs='lib1 ...'  link against additional libs (default is no)
 #             --with-readline \
 #            --with-dtrace \
+#             --with-system-expat \

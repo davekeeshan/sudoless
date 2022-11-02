@@ -2,6 +2,12 @@ GCC_REPO           := https://github.com/gcc-mirror/gcc.git
 GCC_REV            ?= 12.1.0
 GCC_INSTALL        := ${INSTALL_DIR}/gcc/${GCC_REV}
 GCC_DIR            := ${DOWNLOAD_DIR}/gcc-git
+SYSTEM_GCC         ?= 1
+
+ifeq ($(SYSTEM_GCC), 0)
+	PATH := $(GCC_INSTALL)/bin:${PATH}
+	LD_LIBRARY_PATH := $(GCC_INSTALL)/lib64:${LD_LIBRARY_PATH}
+endif
 
 gcc_git: | ${GCC_DIR}
 	if [ "${GCC_REV}" = "" ]; then \
