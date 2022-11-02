@@ -2,6 +2,11 @@ MAKE_REPO       := https://git.savannah.gnu.org/git/make.git
 MAKE_REV        ?= 4.3
 MAKE_INSTALL    := ${INSTALL_DIR}/make/${MAKE_REV}
 MAKE_DIR        := ${DOWNLOAD_DIR}/make-git
+SYSTEM_MAKE     ?= 1
+
+ifeq ($(SYSTEM_MAKE), 0)
+	PATH := $(MAKE_INSTALL)/bin:${PATH}
+endif
 
 make_clean:
 	rm -rf ${MAKE_INSTALL}

@@ -10,9 +10,9 @@ sqlite: mkdir_install gcc tcl | $(SQLITE_INSTALL)
 $(SQLITE_DIR):
 	@echo "Folder $(SQLITE_DIR) does not exist"
 	rm -rf sqlite*
-	wget --no-check-certificate https://www.sqlite.org/src/tarball/sqlite.tar.gz
-	tar -zxvf sqlite.tar.gz
-	mv sqlite ${SQLITE_DIR}
+	wget --no-check-certificate  -c -P ${DOWNLOAD_DIR} https://www.sqlite.org/src/tarball/sqlite.tar.gz
+	cd ${DOWNLOAD_DIR}; tar -zxvf sqlite.tar.gz
+	cd ${DOWNLOAD_DIR}; mv sqlite ${SQLITE_DIR}
 
 $(SQLITE_INSTALL):| $(SQLITE_DIR)
 	@echo "Folder $(SQLITE_INSTALL) does not exist"

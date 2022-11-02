@@ -2,6 +2,11 @@ BASH_REPO     := https://github.com/bminor/bash.git
 BASH_REV      ?= bash-5.2
 BASH_INSTALL  := ${INSTALL_DIR}/bash/${BASH_REV}
 BASH_DIR      := ${DOWNLOAD_DIR}/bash-git
+SYSTEM_BASH   ?= 1
+
+ifeq ($(SYSTEM_BASH), 0)
+	PATH := $(BASH_INSTALL)/bin:${PATH}
+endif
 
 bash_clean:
 	rm -rf $(BASH_INSTALL)

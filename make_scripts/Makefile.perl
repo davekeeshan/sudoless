@@ -1,7 +1,13 @@
+#!/usr/bin/env make
 PERL_REPO          := https://github.com/Perl/perl5.git
 PERL_REV           ?= v5.36.0
 PERL_INSTALL       := ${INSTALL_DIR}/perl/${PERL_REV}
 PERL_DIR           := ${DOWNLOAD_DIR}/perl-git
+SYSTEM_PERL        ?= 1
+
+ifeq ($(SYSTEM_PERL), 0)
+	PATH := $(PERL_INSTALL)/bin:${PATH}
+endif
 
 perl_clean:
 	rm -rf $(PERL_INSTALL)

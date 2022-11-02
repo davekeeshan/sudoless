@@ -1,3 +1,4 @@
+#!/usr/bin/env make
 LIBFFI_REV        ?= 3.4.2
 LIBFFI_INSTALL    := ${INSTALL_DIR}/libffi/${LIBFFI_REV}
 LIBFFI_DIR        := ${DOWNLOAD_DIR}/libffi-${LIBFFI_REV}

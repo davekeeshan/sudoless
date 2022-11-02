@@ -1,3 +1,4 @@
+#!/usr/bin/env make
 BAZEL_REPO     := https://github.com/bazelbuild/bazel
 BAZEL_REV      ?= 5.3.1
 BAZEL_INSTALL  := ${INSTALL_DIR}/bazel/${BAZEL_REV}
