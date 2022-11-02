@@ -14,7 +14,7 @@ SYSTEM_GCC     ?= 1
 SYSTEM_PYTHON  ?= 1
 
 
-include ${SCRIPTS_DIR}/Makefile.*
+include ${SCRIPTS_DIR}/*.mak
 
 LD_LIBRARY_PATH := ${INSTALL_DIR}/local/lib:${LD_LIBRARY_PATH}
 ifeq ($(SYSTEM_GCC), 0)
