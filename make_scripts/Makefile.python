@@ -1,6 +1,6 @@
 # make python PYTHON_REV=v3.10.4
 CWD               ?= ${PWD}
-PYTHON_REV        ?= v3.10.7
+PYTHON_REV        ?= v3.10.8
 PYTHON_INSTALL    := ${INSTALL_DIR}/python/${PYTHON_REV}
 PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
 PYTHON_REPO       := https://github.com/python/cpython.git
@@ -27,7 +27,8 @@ ifeq (${SYSTEM_PYTHON}, 0)
 # 	@echo "    export LD_LIBRARY_PATH=${INSTALL_DIR}/local/lib"
 endif
 
-python_dependancy: gcc make libffi openssl tcl tk sqlite bzip2
+#python_dependancy: gcc make libffi openssl tcl tk sqlite bzip2
+python_dependancy: gcc make libffi openssl tcl sqlite bzip2
 
 ${PYTHON_DIR}:
 ifeq (${SYSTEM_PYTHON}, 0)
@@ -64,7 +65,6 @@ ifeq (${SYSTEM_PYTHON}, 0)
             --with-dbmliborder=gdbm:ndbm:bdb \
             --with-system-expat \
             --enable-loadable-sqlite-extensions \
-            --with-dtrace \
 			--without-static-libpython\
 			--with-system-ffi=${LIBFFI_INSTALL}/lib64;\
         make -j ${PROCESSOR};\
@@ -83,3 +83,4 @@ python_link:
 # --with-libs=/projects/flow/tools/x86_64-centos7/sqlite/3.39.1/lib
 #   --with-libs='lib1 ...'  link against additional libs (default is no)
 #             --with-readline \
+#            --with-dtrace \

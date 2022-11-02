@@ -43,7 +43,7 @@ else
 		export PATH=${GNAT_INSTALL}/bin:${PATH}; \
 		../configure \
 			--disable-multilib \
-			--enable-languages=c,c++,ada \
+			--enable-languages=c,c++ \
 			--prefix=${GCC_INSTALL}; \
 		make clean;\
 		make;\

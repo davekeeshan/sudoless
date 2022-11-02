@@ -8,7 +8,7 @@ VERIBLE_RELEASE   := v0.0-2433-ga2c384c2
 verible_clean:
 	rm -rf ${VERIBLE_INSTALL}
 
-verible: mkdir_install bazel_release gcc bison flex | ${VERIBLE_INSTALL}
+verible: mkdir_install bazel_release gcc bison flex python | ${VERIBLE_INSTALL}
 
 ${VERIBLE_DIR}:
 	@echo "Folder ${VERIBLE_DIR} does not exist"
