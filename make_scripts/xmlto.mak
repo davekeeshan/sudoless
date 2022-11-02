@@ -1,4 +1,3 @@
-#!/usr/bin/env make
 XMLTO_REV        ?= 0.0.28
 XMLTO_INSTALL    := ${INSTALL_DIR}/xmlto/${XMLTO_REV}
 XMLTO_DIR        := ${DOWNLOAD_DIR}/xmlto-${XMLTO_REV}

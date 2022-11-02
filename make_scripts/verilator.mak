@@ -1,15 +1,16 @@
 # Use this commmand
-# make verilator VERILATOR_REV=v4.226 FLEX_REV=v2.6.3
+# make verilator FLEX_REV=v2.6.3
 VERILATOR_REPO     := https://github.com/verilator/verilator.git
-VERILATOR_HEAD     ?= $(shell git ls-remote ${VERILATOR_REPO} | head -1 | awk '{print $$1}')
-VERILATOR_REV      ?= ${VERILATOR_HEAD}
+# VERILATOR_HEAD     ?= $(shell git ls-remote ${VERILATOR_REPO} | head -1 | awk '{print $$1}')
+# VERILATOR_REV      ?= ${VERILATOR_HEAD}
+VERILATOR_REV      ?= v5.002
 VERILATOR_INSTALL  := ${INSTALL_DIR}/verilator/${VERILATOR_REV}
 VERILATOR_DIR      := ${DOWNLOAD_DIR}/verilator-git
 
 verilator_clean:
 	rm -rf ${VERILATOR_INSTALL}
 
-verilator: mkdir_install gcc bison flex | ${VERILATOR_INSTALL}
+verilator: mkdir_install gcc bison flex python | ${VERILATOR_INSTALL}
 
 ${VERILATOR_DIR}: 
 	@echo "Folder ${VERILATOR_DIR} does not exist"

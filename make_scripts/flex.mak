@@ -6,7 +6,7 @@ FLEX_DIR          := ${DOWNLOAD_DIR}/${DOWNLOAD_DIR}/flex-git
 flex_clean:
 	rm -rf ${FLEX_INSTALL}
 
-flex: mkdir_install gcc make texinfo help2man tinytex gnulib | ${FLEX_INSTALL}
+flex: mkdir_install gcc make gnulib | ${FLEX_INSTALL}
 
 ${FLEX_DIR}: 
 	@echo "Folder ${FLEX_DIR} does not exist"
