@@ -41,13 +41,13 @@ python_dependancy: gcc make libffi openssl tcl sqlite bzip2
 
 ${PYTHON_DIR}:
 ifeq (${SYSTEM_PYTHON}, 0)
-	$(MAKE) python_dependancy
 	@echo "Folder ${PYTHON_DIR} does not exist"
 	git clone ${PYTHON_REPO} $(PYTHON_DIR)
 endif
 
 ${PYTHON_INSTALL}:| ${PYTHON_DIR}
 ifeq (${SYSTEM_PYTHON}, 0)
+	$(MAKE) python_dependancy
 	if [ "${PYTHON_REV}" = "" ]; then \
 		cd ${PYTHON_DIR}; \
 			git fetch; \
