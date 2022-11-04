@@ -6,7 +6,7 @@ FLEX_DIR          := ${DOWNLOAD_DIR}/flex-git
 flex_clean:
 	rm -rf ${FLEX_INSTALL}
 
-flex: mkdir_install gcc make gnulib | ${FLEX_INSTALL}
+flex: mkdir_install gcc make gnulib automake texinfo help2man | ${FLEX_INSTALL}
 
 ${FLEX_DIR}: 
 	@echo "Folder ${FLEX_DIR} does not exist"
@@ -24,9 +24,9 @@ ${FLEX_INSTALL}: | ${FLEX_DIR}
         	git checkout ${FLEX_REV};\
     fi
 	cd ${FLEX_DIR}; \
-		export PATH=${GNULIB_INSTALL}/bin:${GETTEXT_INSTALL}/bin:${TINYTEX_INSTALL}/bin/x86_64-linux:${TEXINFO_INSTALL}/bin:${HELP2MAN_INSTALL}/bin:${PATH}; \
+		export PATH=${AUTOMAKE_INSTALL}/bin:${GNULIB_INSTALL}/bin:${GETTEXT_INSTALL}/bin:${TINYTEX_INSTALL}/bin/x86_64-linux:${TEXINFO_INSTALL}/bin:${HELP2MAN_INSTALL}/bin:${PATH}; \
 		./autogen.sh; \
 		./configure --prefix=${FLEX_INSTALL}; \
 		make clean; \
 		make; \
-		make install-exec        
+		make install        

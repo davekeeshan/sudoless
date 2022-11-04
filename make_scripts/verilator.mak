@@ -1,5 +1,5 @@
 # Use this commmand
-# make verilator FLEX_REV=v2.6.3
+# make verilator FLEX_REV=flex-2.5.39
 VERILATOR_REPO     := https://github.com/verilator/verilator.git
 # VERILATOR_HEAD     ?= $(shell git ls-remote ${VERILATOR_REPO} | head -1 | awk '{print $$1}')
 # VERILATOR_REV      ?= ${VERILATOR_HEAD}
