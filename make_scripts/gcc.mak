@@ -54,4 +54,5 @@ else
 		make clean;\
 		make;\
 		make install
+	rm -rf ${GCC_DIR}/objdir
 endif

@@ -1,7 +1,7 @@
 FLEX_REPO         := https://github.com/westes/flex.git
 FLEX_REV          ?= v2.6.4
 FLEX_INSTALL      := ${INSTALL_DIR}/flex/${FLEX_REV}
-FLEX_DIR          := ${DOWNLOAD_DIR}/${DOWNLOAD_DIR}/flex-git
+FLEX_DIR          := ${DOWNLOAD_DIR}/flex-git
 
 flex_clean:
 	rm -rf ${FLEX_INSTALL}
@@ -29,4 +29,4 @@ ${FLEX_INSTALL}: | ${FLEX_DIR}
 		./configure --prefix=${FLEX_INSTALL}; \
 		make clean; \
 		make; \
-		make install        
+		make install-exec        
