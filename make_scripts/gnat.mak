@@ -1,4 +1,4 @@
-GNAT_REV           ?= 2021
+GNAT_REV           ?= 2015
 GNAT_INSTALL       ?= ${INSTALL_DIR}/gnat/${GNAT_REV}
 GNAT_DIR           := ${DOWNLOAD_DIR}/gnat-${GNAT_REV}
 
@@ -30,3 +30,4 @@ ${GNAT_INSTALL}: | ${GNAT_DIR}
 # 	@exit 1
 # 
 # https://community.download.adacore.com/v1/636d019a16eddc4457f1b29f4b2d2a5a21a98450?filename=gnat-2021-20210519-riscv32-elf-linux64-bin&rand=1633
+# 

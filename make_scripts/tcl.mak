@@ -1,4 +1,5 @@
-TCL_REPO     := https://github.com/tcltk/tcl.git
+#TCL_REPO     := https://github.com/tcltk/tcl.git
+TCL_REPO     := git@github.com:tcltk/tcl.git
 TCL_REV      ?= core-8-6-12
 TCL_INSTALL  := ${INSTALL_DIR}/tcl/${TCL_REV}
 TCL_DIR      := ${DOWNLOAD_DIR}/tcl-git
@@ -27,3 +28,4 @@ ${TCL_INSTALL}: | ${TCL_DIR}
 		./configure --prefix=${TCL_INSTALL}; \
 		make; \
 		make install
+	ln -s ${TCL_INSTALL}/bin/tclsh* ${TCL_INSTALL}/bin/tclsh 

@@ -1,5 +1,6 @@
-GIT_REPO           := https://github.com/git/git.git
-GIT_REV            ?= v2.37.2
+#GIT_REPO           := https://github.com/git/git.git
+GIT_REPO           := git@github.com:git/git.git
+GIT_REV            ?= v2.38.1
 GIT_INSTALL        := ${INSTALL_DIR}/git/${GIT_REV}
 GIT_DIR            := ${DOWNLOAD_DIR}/git-git
 SYSTEM_GIT         ?= 1

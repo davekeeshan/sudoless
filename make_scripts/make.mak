@@ -16,7 +16,8 @@ make: mkdir_install | ${MAKE_INSTALL}
 ${MAKE_INSTALL}:
 ifeq (${SYSTEM_MAKE}, 0)
 	@echo "Folder ${MAKE_INSTALL} does not exist"
-	curl https://ftp.gnu.org/gnu/make/make-${MAKE_REV}.tar.gz -o ${DOWNLOAD_DIR}/make-${MAKE_REV}.tar.gz
+	#curl https://ftp.gnu.org/gnu/make/make-${MAKE_REV}.tar.gz -o ${DOWNLOAD_DIR}/make-${MAKE_REV}.tar.gz
+	wget --no-check-certificate -c -P ${DOWNLOAD_DIR} https://ftp.gnu.org/gnu/make/make-${MAKE_REV}.tar.gz
 	cd ${DOWNLOAD_DIR}; tar -zxvf make-${MAKE_REV}.tar.gz
 	cd ${DOWNLOAD_DIR}/make-${MAKE_REV}; \
 		./configure --prefix=${MAKE_INSTALL}; \

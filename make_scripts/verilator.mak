@@ -32,6 +32,6 @@ ${VERILATOR_INSTALL}: | ${VERILATOR_DIR}
 		autoconf; \
 		./configure --prefix=$(VERILATOR_INSTALL); \
 		make clean; \
-		make; \
+		make -j ${PROCESSOR}; \
 		make install        
      

@@ -1,5 +1,6 @@
-GCC_REPO           := https://github.com/gcc-mirror/gcc.git
-GCC_REV            ?= 12.1.0
+#GCC_REPO           := https://github.com/gcc-mirror/gcc.git
+GCC_REPO           := git@github.com:gcc-mirror/gcc.git
+GCC_REV            ?= 11.3.0
 GCC_INSTALL        := ${INSTALL_DIR}/gcc/${GCC_REV}
 GCC_DIR            := ${DOWNLOAD_DIR}/gcc-git
 SYSTEM_GCC         ?= 1
@@ -40,13 +41,13 @@ ifeq (${SYSTEM_GCC}, 1)
 else
 	@echo "Folder ${GCC_INSTALL} does not exist"
 	$(MAKE) gcc_git;
+	rm -rf ${GCC_DIR}/objdir
+	mkdir -p ${GCC_DIR}/objdir
 	cd ${GCC_DIR} ; \
 		rm -rf mpfr* gmp* mpc* isl*; \
 		./contrib/download_prerequisites
-	rm -rf ${GCC_DIR}/objdir
-	mkdir -p ${GCC_DIR}/objdir
 	cd ${GCC_DIR}/objdir ; \
-		export PATH=${GNAT_INSTALL}/bin:${PATH}; \
+		export PATH=${GNAT_INSTALL2}/bin:${PATH}; \
 		../configure \
 			--disable-multilib \
 			--enable-languages=c,c++ \

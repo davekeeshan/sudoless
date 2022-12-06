@@ -3,7 +3,7 @@ VERIBLE_REPO      := https://github.com/chipsalliance/verible.git
 VERIBLE_REV       ?= v0.0-2433-ga2c384c2
 VERIBLE_INSTALL   := ${INSTALL_DIR}/verible/${VERIBLE_REV}
 VERIBLE_DIR       := ${DOWNLOAD_DIR}/verible-git
-VERIBLE_RELEASE   := v0.0-2433-ga2c384c2
+VERIBLE_RELEASE   := v0.0-2479-g92928558
 
 verible_clean:
 	rm -rf ${VERIBLE_INSTALL}
@@ -33,7 +33,6 @@ ${VERIBLE_INSTALL}: | ${VERIBLE_DIR}
 
 verible_release:
 	mkdir -p ${INSTALL_DIR}/verible
-	rm -rf verible-${VERIBLE_RELEASE}*
-	wget --no-check-certificate https://github.com/chipsalliance/verible/releases/download/${VERIBLE_RELEASE}/verible-${VERIBLE_RELEASE}-CentOS-7.9.2009-Core-x86_64.tar.gz
-	tar -zxvf verible-${VERIBLE_RELEASE}-CentOS-7.9.2009-Core-x86_64.tar.gz
-	cp -r verible-${VERIBLE_RELEASE} ${INSTALL_DIR}/verible/${VERIBLE_RELEASE}
+	wget --no-check-certificate -c -P ${DOWNLOAD_DIR} https://github.com/chipsalliance/verible/releases/download/${VERIBLE_RELEASE}/verible-${VERIBLE_RELEASE}-CentOS-7.9.2009-Core-x86_64.tar.gz
+	cd ${DOWNLOAD_DIR} ; tar -zxvf verible-${VERIBLE_RELEASE}-CentOS-7.9.2009-Core-x86_64.tar.gz
+	cd ${DOWNLOAD_DIR} ; cp -r verible-${VERIBLE_RELEASE} ${INSTALL_DIR}/verible/${VERIBLE_RELEASE}

@@ -1,4 +1,5 @@
-GNULIB_REPO     := https://git.savannah.gnu.org/git/gnulib.git
+#GNULIB_REPO     := https://git.savannah.gnu.org/git/gnulib.git
+GNULIB_REPO     := git@github.com:coreutils/gnulib.git
 GNULIB_REV      ?= master
 GNULIB_INSTALL  := ${INSTALL_DIR}/gnulib/${GNULIB_REV}
 GNULIB_DIR      := ${DOWNLOAD_DIR}/gnulib-git
@@ -18,12 +19,12 @@ ${GNULIB_INSTALL}: | ${GNULIB_DIR}
 	if [ "${GNULIB_REV}" = "" ]; then \
 		cd ${GNULIB_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+			git checkout -f master;\
 	else \
 		cd ${GNULIB_DIR}; \
 			git fetch; \
-        	git checkout -f ${GNULIB_REV};\
-    fi
+			git checkout -f ${GNULIB_REV};\
+	fi
 	mkdir -p ${GNULIB_INSTALL}/bin
 	ln -fs $(shell ls ${GNULIB_DIR}/gnulib-tool) ${GNULIB_INSTALL}/bin/.
 	ln -fs $(shell ls ${GNULIB_DIR}/gnulib-tool.py) ${GNULIB_INSTALL}/bin/.

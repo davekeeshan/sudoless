@@ -18,5 +18,5 @@ ${GPERF_INSTALL}: | ${GPERF_DIR}
 		export LD_LIBRARY_PATH=${GCC_INSTALL}/lib64; \
 		./configure --prefix=${GPERF_INSTALL}; \
 		make clean; \
-		make; \
+		make -j ${PROCESSOR}; \
 		make install

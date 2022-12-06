@@ -1,11 +1,8 @@
-BZIP2_REPO         := https://github.com/libarchive/bzip2.git
+#BZIP2_REPO         := https://github.com/libarchive/bzip2.git
+BZIP2_REPO         := git@github.com:libarchive/bzip2.git
 BZIP2_REV          ?= bzip2-1.0.8
 BZIP2_INSTALL      := ${INSTALL_DIR}/bzip2/${BZIP2_REV}
 BZIP2_DIR          := ${DOWNLOAD_DIR}/bzip2-git
-
-# override TAG_REV   = ${BZIP2_REV}
-# override TAG_DIR   = ${BZIP2_DIR}
-# override TAG_REPO  = ${BZIP2_REPO}
 
 bzip2_clean:
 	rm -rf ${BZIP2_INSTALL}

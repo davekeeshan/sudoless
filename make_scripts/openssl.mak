@@ -1,4 +1,5 @@
-OPENSSL_REPO       := https://github.com/openssl/openssl.git
+#OPENSSL_REPO       := https://github.com/openssl/openssl.git
+OPENSSL_REPO       := git@github.com:openssl/openssl.git
 OPENSSL_REV        ?= openssl-3.0.7
 OPENSSL_INSTALL    := ${INSTALL_DIR}/openssl/${OPENSSL_REV}
 OPENSSL_DIR        := ${DOWNLOAD_DIR}/openssl-git

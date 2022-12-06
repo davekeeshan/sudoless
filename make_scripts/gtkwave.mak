@@ -1,7 +1,7 @@
 GTKWAVE_REPO     := https://github.com/gtkwave/gtkwave.git
-GTKWAVE_HEAD     ?= ${shell git ls-remote ${GTKWAVE_REPO} | head -1 | awk '{print $$1}'}
-GTKWAVE_REV      ?= ${GTKWAVE_HEAD}
-#GTKWAVE_REV      ?= gtkwave-0.20
+#GTKWAVE_HEAD     ?= ${shell git ls-remote ${GTKWAVE_REPO} | head -1 | awk '{print $$1}'}
+#GTKWAVE_REV      ?= ${GTKWAVE_HEAD}
+GTKWAVE_REV      ?= gtkwave-0.20
 GTKWAVE_INSTALL  := ${INSTALL_DIR}/gtkwave/${GTKWAVE_REV}
 GTKWAVE_DIR      := ${DOWNLOAD_DIR}/gtkwave-git
 

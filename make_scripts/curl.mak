@@ -1,4 +1,5 @@
-CURL_REPO       := https://github.com/curl/curl.git
+#CURL_REPO       := https://github.com/curl/curl.git
+CURL_REPO       := git@github.com:curl/curl.git
 CURL_REV        ?= curl-7_84_0
 CURL_INSTALL    := ${INSTALL_DIR}/curl/${CURL_REV}
 CURL_DIR        := ${DOWNLOAD_DIR}/curl-git

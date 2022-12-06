@@ -1,9 +1,10 @@
 # make python PYTHON_REV=v3.10.4
 CWD               ?= ${PWD}
-PYTHON_REV        ?= v3.10.8
+PYTHON_REV        ?= v3.10.7
 PYTHON_INSTALL    := ${INSTALL_DIR}/python/${PYTHON_REV}
 PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
-PYTHON_REPO       := https://github.com/python/cpython.git
+#PYTHON_REPO       := https://github.com/python/cpython.git
+PYTHON_REPO       := git@github.com:python/cpython.git
 VENV_PATH         := ${CWD}/.venv_python/${OSID}
 SYSTEM_PYTHON     ?= 1
 
@@ -36,8 +37,8 @@ ifeq (${SYSTEM_PYTHON}, 0)
 # 	@echo "    export LD_LIBRARY_PATH=${INSTALL_DIR}/local/lib"
 endif
 
-#python_dependancy: gcc make libffi openssl tcl tk sqlite bzip2
-python_dependancy: gcc make libffi openssl tcl sqlite bzip2
+python_dependancy: gcc make libffi openssl tcl tk sqlite bzip2 xy
+
 
 ${PYTHON_DIR}:
 ifeq (${SYSTEM_PYTHON}, 0)
@@ -58,9 +59,11 @@ ifeq (${SYSTEM_PYTHON}, 0)
         	git checkout -f ${PYTHON_REV};\
     fi
 	cd ${PYTHON_DIR}; \
-		export CFLAGS="-I${LIBFFI_INSTALL}/include -I${BZIP2_INSTALL}/include -I${NCURSES_INSTALL}/usr/include"; \
-		export LDFLAGS="-Wl,-rpath=${OPENSSL_INSTALL}/lib,-rpath=${LIBFFI_INSTALL}/lib64,-rpath=${SQLITE_INSTALL}/lib,-rpath=${BZIP2_INSTALL}/lib,-rpath=${TCL_INSTALL}/lib,-rpath=${TK_INSTALL}/lib,-rpath=${NCURSES_INSTALL}/usr/lib -L${LIBFFI_INSTALL}/lib64 -L${BZIP2_INSTALL}/lib -L${NCURSES_INSTALL}/usr/lib"; \
-        make clean; \
+		export CFLAGS="-I${BZIP2_INSTALL}/include -I${XY_INSTALL}/include -I${NCURSES_INSTALL}/usr/include"; \
+		export LDFLAGS="-Wl,-rpath=${OPENSSL_INSTALL}/lib,-rpath=${LIBFFI_INSTALL}/lib64,-rpath=${SQLITE_INSTALL}/lib,-rpath=${BZIP2_INSTALL}/lib,-rpath=${XY_INSTALL}/lib,-rpath=${TCL_INSTALL}/lib,-rpath=${TK_INSTALL}/lib,-rpath=${NCURSES_INSTALL}/usr/lib -L${LIBFFI_INSTALL}/lib64 -L${BZIP2_INSTALL}/lib -L${XY_INSTALL}/lib -L${NCURSES_INSTALL}/usr/lib"; \
+		export PKG_CONFIG_PATH="${LIBFFI_INSTALL}/lib/pkgconfig:${XY_INSTALL}/lib/pkgconfig"; \
+		rm -rf build; mkdir build; \
+		make clean; \
 		sed -i "s|'\/usr\/local\/include\/sqlite3',|'\/usr\/local\/include\/sqlite3',\n                             '${SQLITE_INSTALL}\/include',|g" setup.py; \
         ./configure \
 			--with-ensurepip=install \
@@ -73,10 +76,9 @@ ifeq (${SYSTEM_PYTHON}, 0)
             --with-computed-gotos=yes \
             --with-dbmliborder=gdbm:ndbm:bdb \
             --enable-loadable-sqlite-extensions \
-			--without-static-libpython\
-			--with-system-ffi=${LIBFFI_INSTALL}/lib64;\
-        make -j ${PROCESSOR};\
-		make install
+			--without-static-libpython ; \
+        make -j ${PROCESSOR} ;\
+		#make install
 #	$(MAKE) python_link
 else
 	@echo "Using System python"
@@ -93,3 +95,5 @@ python_link:
 #             --with-readline \
 #            --with-dtrace \
 #             --with-system-expat \
+#        make -j ${PROCESSOR} > temp.txt;\
+

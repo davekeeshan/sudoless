@@ -1,5 +1,6 @@
 #!/usr/bin/env make
-PERL_REPO          := https://github.com/Perl/perl5.git
+#PERL_REPO          := https://github.com/Perl/perl5.git
+PERL_REPO          := git@github.com:Perl/perl5.git
 PERL_REV           ?= v5.36.0
 PERL_INSTALL       := ${INSTALL_DIR}/perl/${PERL_REV}
 PERL_DIR           := ${DOWNLOAD_DIR}/perl-git

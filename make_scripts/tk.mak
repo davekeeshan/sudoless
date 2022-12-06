@@ -1,4 +1,5 @@
-TK_REPO     := https://github.com/tcltk/tk.git
+#TK_REPO     := https://github.com/tcltk/tk.git
+TK_REPO     := git@github.com:tcltk/tk.git
 TK_REV      ?= core-8-6-12
 TK_INSTALL  := ${INSTALL_DIR}/tk/${TK_REV}
 TK_DIR      := ${DOWNLOAD_DIR}/tk-git
