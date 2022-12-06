@@ -40,7 +40,7 @@ ifeq (${SYSTEM_GIT}, 0)
 		make configure; \
 		./configure --prefix=${GIT_INSTALL} --with-openssl=${OPENSSL_INSTALL}; \
 		make clean; \
-		make all ; \
+		make all -j ${PROCESSOR}; \
 		make install        
 	${MAKE} pydeactivate
 	${MAKE} git_link

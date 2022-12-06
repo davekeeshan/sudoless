@@ -30,7 +30,7 @@ ${OPENSSH_INSTALL}: | ${OPENSSH_DIR}
 		autoreconf; \
 		./configure --prefix=${OPENSSH_INSTALL} --with-ssl-dir=${OPENSSL_INSTALL} --without-openssl-header-check; \
 		make clean; \
-		make; \
+		make -j ${PROCESSOR} ; \
 		make install
 	#$(MAKE) openssh_link
 

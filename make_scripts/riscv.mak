@@ -29,6 +29,6 @@ ${RISCV_INSTALL}: | ${RISCV_DIR}
 		export PATH=${RISCV_INSTALL}/bin:${TEXINFO_INSTALL}/bin:${PATH}; \
 		../configure --prefix=${RISCV_INSTALL} ; \
 		make clean; \
-		make -j$(nproc); \
+		make -j ${PROCESSOR} ; \
 		#make install
 

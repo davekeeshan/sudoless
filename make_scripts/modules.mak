@@ -28,6 +28,6 @@ ${MODULES_INSTALL}: | ${MODULES_DIR}
 		pip install sphinx; \
 		./configure --prefix=${MODULES_INSTALL} --with-tclsh=${TCL_INSTALL}/bin/tclsh --with-tcl=${TCL_INSTALL}/lib --with-python=${VENV_PATH}/bin/python; \
 		make clean; \
-		make -j$(nproc); \
+		make -j ${PROCESSOR} ; \
 		make install
 	${MAKE} pydeactivate

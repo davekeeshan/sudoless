@@ -28,7 +28,7 @@ else
 	@echo "Folder ${WGET_INSTALL} does not exist"
 	cd ${WGET_DIR}; \
 		./configure --prefix=${WGET_INSTALL} --with-ssl=openssl --with-openssl=yes -with-libssl-prefix=${OPENSSL_INSTALL}; \
-		make; \
+		make -j ${PROCESSOR} ; \
 		make install
 		$(MAKE) wget_link
 endif

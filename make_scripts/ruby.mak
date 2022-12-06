@@ -17,7 +17,7 @@ $(RUBY_INSTALL): | $(RUBY_DIR)
 	cd ${RUBY_DIR}; \
 		export PATH=$(GCC_INSTALL)/bin:$(MAKE_INSTALL)/bin:${PATH}; \
 		./configure --prefix=${RUBY_INSTALL} --with-openssl-dir=${OPENSSL_INSTALL} ;\
-		make; \
+		make -j ${PROCESSOR} ; \
 		make install	
 	#$(MAKE) ruby_link
 
