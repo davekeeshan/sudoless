@@ -27,6 +27,7 @@ ${TK_INSTALL}: | ${TK_DIR}
     fi
 	cd ${TK_DIR}/unix; \
 		./configure --prefix=${TK_INSTALL} --with-tcl=${TCL_INSTALL}/lib; \
+		make clean ; \
 		make; \
 		make install
 	#rm -rf tk*

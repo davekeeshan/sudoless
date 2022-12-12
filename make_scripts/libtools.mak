@@ -23,9 +23,13 @@ ${LIBTOOLS_INSTALL}: | ${LIBTOOLS_DIR}
 			git fetch; \
         	git checkout -f ${LIBTOOLS_REV};\
     fi
+	rm -rf ${LIBTOOLS_DIR}/build
+	mkdir -p ${LIBTOOLS_DIR}/build
 	cd ${LIBTOOLS_DIR}; \
 		export PATH=${AUTOCONF_INSTALL}/bin:${TEXINFO_INSTALL}/bin:${HELP2MAN_INSTALL}/bin:${PATH}; \
-		./bootstrap ; \
+		export MAKEINFO=${TEXINFO_INSTALL}/bin/makeinfo; \
+		which makeinfo ; \
+		./bootstrap; \
 		./configure --prefix=$(LIBTOOLS_INSTALL); \
 		make clean; \
 		make -j ${PROCESSOR}; \

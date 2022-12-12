@@ -1,4 +1,4 @@
-TEXINFO_REV       ?= 6.8
+TEXINFO_REV       ?= 6.0
 TEXINFO_INSTALL   := ${INSTALL_DIR}/texinfo/${TEXINFO_REV}
 
 texinfo: mkdir_install gcc make perl | ${TEXINFO_INSTALL}

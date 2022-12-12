@@ -47,10 +47,10 @@ else
 		rm -rf mpfr* gmp* mpc* isl*; \
 		./contrib/download_prerequisites
 	cd ${GCC_DIR}/objdir ; \
-		export PATH=${GNAT_INSTALL2}/bin:${PATH}; \
+		export PATH=${GNAT_INSTALL}/bin:${PATH}; \
 		../configure \
 			--disable-multilib \
-			--enable-languages=c,c++ \
+			--enable-languages=c,c++,ada \
 			--prefix=${GCC_INSTALL}; \
 		make clean;\
 		make -j ${PROCESSOR};\

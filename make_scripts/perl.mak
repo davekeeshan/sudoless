@@ -33,8 +33,8 @@ ifeq (${SYSTEM_PERL}, 0)
 			git fetch; \
         	git checkout -f ${PERL_REV};\
     fi
-	rm -rf ${PERL_DIR}/build
-	mkdir -p ${PERL_DIR}/build
+	#rm -rf ${PERL_DIR}/build
+	#mkdir -p ${PERL_DIR}/build
 	cd ${PERL_DIR} ; \
 		sh ./Configure -de -Dprefix=${PERL_INSTALL} -Dusedevel; \
 		make -j ${PROCESSOR}; \

@@ -9,14 +9,14 @@ gettext_clean:
     
 gettext: mkdir_install gcc make gperf gnulib autoconf | ${GETTEXT_INSTALL}
 
-gettext_wget: mkdir_install gcc make | ${GETTEXT_INSTALL}_wget
+gettext_wget: mkdir_install gcc make | ${GETTEXT_INSTALL}
 
 ${GETTEXT_DIR}:
 	@echo "Folder ${GETTEXT_INSTALL} does not exist"
 	git clone ${GETTEXT_REPO} ${GETTEXT_DIR}
 
 
-${GETTEXT_INSTALL}: | ${GETTEXT_DIR}
+${GETTEXT_INSTALL}_git: | ${GETTEXT_DIR}
 	@echo "Folder ${GETTEXT_INSTALL} does not exist"
 	if [ "${GETTEXT_REV}" = "" ]; then \
 		cd ${GETTEXT_DIR}; \
@@ -36,12 +36,12 @@ ${GETTEXT_INSTALL}: | ${GETTEXT_DIR}
 		make; \
 		make install
 		
-${GETTEXT_DIR}_wget:
+${DOWNLOAD_DIR}/gettext-${GETTEXT_REV}.tar.gz:
 	@echo "Folder ${GETTEXT_DIR} does not exist"
 	wget --no-check-certificate -c -P ${DOWNLOAD_DIR} https://ftp.gnu.org/pub/gnu/gettext/gettext-${GETTEXT_REV}.tar.gz
 	cd ${DOWNLOAD_DIR}; tar -xf gettext-${GETTEXT_REV}.tar*
 
-${GETTEXT_INSTALL}_wget: | ${GETTEXT_DIR}_wget
+${GETTEXT_INSTALL}: | ${DOWNLOAD_DIR}/gettext-${GETTEXT_REV}.tar.gz
 	@echo "Folder ${GETTEXT_INSTALL} does not exist"
 	cd ${DOWNLOAD_DIR}/gettext-${GETTEXT_REV}; \
 		./configure --prefix=${GETTEXT_INSTALL}; \

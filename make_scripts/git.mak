@@ -12,7 +12,7 @@ endif
 git_clean:
 	rm -rf ${GIT_INSTALL}
 
-git: mkdir_install pyactivate gcc make xmlto | ${GIT_INSTALL}
+git: mkdir_install pyactivate gcc make xmlto gettext | ${GIT_INSTALL}
 
 ${GIT_DIR}: 
 ifeq (${SYSTEM_GIT}, 0)
@@ -34,7 +34,7 @@ ifeq (${SYSTEM_GIT}, 0)
         	git checkout -f ${GIT_REV};\
     fi
 	cd ${GIT_DIR}; \
-		export PATH=${VENV_PATH}/bin:${XMLTO_INSTALL}/bin:${PATH}; \
+		export PATH=${VENV_PATH}/bin:${XMLTO_INSTALL}/bin:${GETTEXT_INSTALL}/bin:${PATH}; \
 		export LD_LIBRARY_PATH=${INSTALL_DIR}/local/lib; \
 		pip install asciidoc; \
 		make configure; \

@@ -1,5 +1,5 @@
 LIBFFI_REV        ?= v3.4.2
-LIBFFI_REPO       := git@github.com:libffi/libffi.git
+LIBFFI_REPO       := http://github.com/libffi/libffi.git
 LIBFFI_INSTALL    := ${INSTALL_DIR}/libffi/${LIBFFI_REV}
 LIBFFI_DIR        := ${DOWNLOAD_DIR}/libffi-git
 
@@ -30,4 +30,5 @@ ${LIBFFI_INSTALL}: | ${LIBFFI_DIR}
 		make clean; \
 		make -j ${PROCESSOR}; \
 		make install
-		
+
+

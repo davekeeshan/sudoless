@@ -78,7 +78,7 @@ ifeq (${SYSTEM_PYTHON}, 0)
             --enable-loadable-sqlite-extensions \
 			--without-static-libpython ; \
         make -j ${PROCESSOR} ;\
-		#make install
+		make install
 #	$(MAKE) python_link
 else
 	@echo "Using System python"
