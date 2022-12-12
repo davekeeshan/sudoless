@@ -1,5 +1,5 @@
-#BZIP2_REPO         := https://github.com/libarchive/bzip2.git
-BZIP2_REPO         := git@github.com:libarchive/bzip2.git
+BZIP2_REPO         := https://github.com/libarchive/bzip2.git
+#BZIP2_REPO         := git@github.com:libarchive/bzip2.git
 BZIP2_REV          ?= bzip2-1.0.8
 BZIP2_INSTALL      := ${INSTALL_DIR}/bzip2/${BZIP2_REV}
 BZIP2_DIR          := ${DOWNLOAD_DIR}/bzip2-git
@@ -27,11 +27,9 @@ ${BZIP2_INSTALL}: | ${BZIP2_DIR}
         	git checkout -f ${BZIP2_REV};\
     fi
 	cd ${BZIP2_DIR}; \
-		export PATH=${GCC_INSTALL}/bin:${PATH}; \
-		export CC=${GCC_INSTALL}/bin/gcc -fPIC; \
         make distclean; \
 		make -f Makefile-libbz2_so; \
   		make install PREFIX=${BZIP2_INSTALL}; \
 		cp libbz2.so* ${BZIP2_INSTALL}/lib/.; \
 		cp bzip2-shared ${BZIP2_INSTALL}/lib/.
-#         make; \
+#		export CC=${GCC_INSTALL}/bin/gcc -fPIC; \

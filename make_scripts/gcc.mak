@@ -1,6 +1,6 @@
 #GCC_REPO           := https://github.com/gcc-mirror/gcc.git
 GCC_REPO           := git@github.com:gcc-mirror/gcc.git
-GCC_REV            ?= 11.3.0
+GCC_REV            ?= 12.1.0
 GCC_INSTALL        := ${INSTALL_DIR}/gcc/${GCC_REV}
 GCC_DIR            := ${DOWNLOAD_DIR}/gcc-git
 SYSTEM_GCC         ?= 1
@@ -53,7 +53,7 @@ else
 			--enable-languages=c,c++ \
 			--prefix=${GCC_INSTALL}; \
 		make clean;\
-		make;\
+		make -j ${PROCESSOR};\
 		make install
 	rm -rf ${GCC_DIR}/objdir
 endif

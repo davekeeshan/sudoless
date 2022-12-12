@@ -71,15 +71,13 @@ ${GHDL_GCC_INSTALL}: gcc_git ghdl_git
 	rm -rf ${GHDL_DIR}/build
 	mkdir -p ${GHDL_DIR}/build
 	cd ${GHDL_DIR}/build; \
-		export PATH=${GNAT_INSTALL}/bin:${PATH}; \
-		which gnat ; \
+		export PATH=${GNAT_INSTALL}/bin:${TEXINFO_INSTALL}/bin:${PATH}; \
 		../configure --with-gcc=${GCC_DIR} --prefix=${GHDL_GCC_INSTALL}; \
-		#make clean
-		#make copy-sources
+		make copy-sources
 	mkdir -p ${GHDL_DIR}/build/gcc-objs
 	cd ${GHDL_DIR}/build/gcc-objs; \
-		export PATH=${TEXINFO_INSTALL}/bin:${GNAT_INSTALL}/bin:${PATH}; \
-		${GCC_DIR}/configure \
+		export PATH=${GNAT_INSTALL}/bin:${TEXINFO_INSTALL}/bin:${PATH}; \
+		${CWD}/${GCC_DIR}/configure \
 			--prefix=${GHDL_GCC_INSTALL} \
 			--enable-languages=c,vhdl \
 			--disable-bootstrap \

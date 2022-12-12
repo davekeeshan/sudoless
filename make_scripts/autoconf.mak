@@ -1,15 +1,14 @@
-AUTOCONF_REPO     := git@github.com:autotools-mirror/autoconf.git
+#AUTOCONF_REPO     := git@github.com:autotools-mirror/autoconf.git
+AUTOCONF_REPO     := http://github.com/autotools-mirror/autoconf.git
 AUTOCONF_REV      ?= v2.72a
 AUTOCONF_INSTALL  := ${INSTALL_DIR}/autoconf/${AUTOCONF_REV}
 AUTOCONF_DIR      := ${DOWNLOAD_DIR}/autoconf-git
 
 
 autoconf_clean:
-	rm -rf $(AUTOCONF_INSTALL)
+	rm -rf ${AUTOCONF_INSTALL}
     
-autoconf: mkdir_install gcc make | $(AUTOCONF_INSTALL)
-	#export PATH=${AUTOCONF_INSTALL}/bin:${PATH}
-	#PATH := ${AUTOCONF_INSTALL}/bin:${PATH}
+autoconf: mkdir_install gcc make help2man | ${AUTOCONF_INSTALL}
 
 ${AUTOCONF_DIR}:
 	@echo "Folder ${AUTOCONF_INSTALL} does not exist"
@@ -27,9 +26,9 @@ ${AUTOCONF_INSTALL}: | ${AUTOCONF_DIR}
 			git fetch; \
         		git checkout -f ${AUTOCONF_REV};\
 	fi
-	echo ${PATH}
 	cd ${AUTOCONF_DIR}; \
-		autoreconf -i  ; \
+		export PATH=${HELP2MAN_INSTALL}/bin:${PATH} ; \
+		autoreconf -i ; \
 		./configure --prefix=${AUTOCONF_INSTALL} ; \
 		make clean; \
 		make -j ${PROCESSOR}; \

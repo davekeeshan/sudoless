@@ -7,7 +7,7 @@ FLEX_DIR          := ${DOWNLOAD_DIR}/flex-git
 flex_clean:
 	rm -rf ${FLEX_INSTALL}
 
-flex: mkdir_install gcc make automake autoconf gettext gnulib texinfo help2man | ${FLEX_INSTALL}
+flex: mkdir_install gcc make automake autoconf gettext_wget gnulib texinfo help2man | ${FLEX_INSTALL}
 
 ${FLEX_DIR}: 
 	@echo "Folder ${FLEX_DIR} does not exist"
