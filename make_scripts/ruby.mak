@@ -1,25 +1,39 @@
-RUBY_REV        ?= 2.6.10
+RUBY_REPO       := https://github.com/ruby/ruby.git
+RUBY_REV        ?= v3_1_3
 RUBY_INSTALL    := ${INSTALL_DIR}/ruby/${RUBY_REV}
-RUBY_DIR        := ${DOWNLOAD_DIR}/ruby-${RUBY_REV}
+RUBY_DIR        := ${DOWNLOAD_DIR}/ruby-git
 
-ruby: mkdir_install gcc make wget openssl | $(RUBY_INSTALL)
+ruby: mkdir_install gcc make openssl autoconf libffi | $(RUBY_INSTALL)
 
 ruby_clean:
 	rm -rf $(RUBY_INSTALL)
 
-$(RUBY_DIR):
-	@echo "Folder $(RUBY_DIR) does not exist"
-	wget --no-check-certificate -c -P ${DOWNLOAD_DIR} https://cache.ruby-lang.org/pub/ruby/2.6/ruby-${RUBY_REV}.tar.gz
-	cd ${DOWNLOAD_DIR} ; tar -zxvf ruby-${RUBY_REV}.tar.gz
+${RUBY_DIR}:
+	@echo "Folder ${RUBY_INSTALL} does not exist"
+	git clone ${RUBY_REPO} ${RUBY_DIR}
 
-$(RUBY_INSTALL): | $(RUBY_DIR)
-	@echo "Folder $(RUBY_INSTALL) does not exist"
+${RUBY_INSTALL}: | ${RUBY_DIR}
+	@echo "Folder ${RUBY_INSTALL} does not exist"
+	if [ "${RUBY_REV}" = "" ]; then \
+		cd ${RUBY_DIR}; \
+			git fetch; \
+        	git checkout -f master;\
+	else \
+		cd ${RUBY_DIR}; \
+			git fetch; \
+        	git checkout -f ${RUBY_REV};\
+    fi
+	rm -rf ${RUBY_DIR}/build
+	mkdir -p ${RUBY_DIR}/build
 	cd ${RUBY_DIR}; \
-		export PATH=$(GCC_INSTALL)/bin:$(MAKE_INSTALL)/bin:${PATH}; \
+		export PATH=${AUTOCONF_INSTALL}/bin:${PATH}; \
+		export LDFLAGS="-L${LIBFFI_INSTALL}/lib64"; \
+		./autogen.sh; \
 		./configure --prefix=${RUBY_INSTALL} --with-openssl-dir=${OPENSSL_INSTALL} ;\
+		make clean ; \
 		make -j ${PROCESSOR} ; \
 		make install	
-	#$(MAKE) ruby_link
+	$(MAKE) ruby_link
 
 ruby_link:
 	ln -fs $(shell ls ${RUBY_INSTALL}/bin/*) ${INSTALL_DIR}/local/lib/.
