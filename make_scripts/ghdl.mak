@@ -77,7 +77,7 @@ ${GHDL_GCC_INSTALL}: gcc_git ghdl_git
 	mkdir -p ${GHDL_DIR}/build/gcc-objs
 	cd ${GHDL_DIR}/build/gcc-objs; \
 		export PATH=${GNAT_INSTALL}/bin:${TEXINFO_INSTALL}/bin:${PATH}; \
-		${CWD}/${GCC_DIR}/configure \
+		${GCC_DIR}/configure \
 			--prefix=${GHDL_GCC_INSTALL} \
 			--enable-languages=c,vhdl \
 			--disable-bootstrap \

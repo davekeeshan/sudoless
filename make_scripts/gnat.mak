@@ -1,4 +1,4 @@
-GNAT_REV           ?= 2015
+GNAT_REV           ?= 2021
 GNAT_INSTALL       ?= ${INSTALL_DIR}/gnat/${GNAT_REV}
 GNAT_DIR           := ${DOWNLOAD_DIR}/gnat-${GNAT_REV}
 

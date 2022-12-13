@@ -29,10 +29,11 @@ ${RUBY_INSTALL}: | ${RUBY_DIR}
 		export PATH=${AUTOCONF_INSTALL}/bin:${PATH}; \
 		export LDFLAGS="-L${LIBFFI_INSTALL}/lib64"; \
 		./autogen.sh; \
-		./configure --prefix=${RUBY_INSTALL} --with-openssl-dir=${OPENSSL_INSTALL} ;\
-		make clean ; \
-		make -j ${PROCESSOR} ; \
-		make install	
+		cd build; \
+			./configure --prefix=${RUBY_INSTALL} --with-openssl-dir=${OPENSSL_INSTALL} ;\
+			make clean ; \
+			make -j ${PROCESSOR} ; \
+			make install	
 	$(MAKE) ruby_link
 
 ruby_link:

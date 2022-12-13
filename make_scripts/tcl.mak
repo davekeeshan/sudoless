@@ -26,6 +26,9 @@ ${TCL_INSTALL}: | ${TCL_DIR}
     fi
 	cd ${TCL_DIR}/unix; \
 		./configure --prefix=${TCL_INSTALL}; \
+		make clean ; \
 		make -j ${PROCESSOR} ; \
 		make install
+
+tcl_link:
 	ln -s ${TCL_INSTALL}/bin/tclsh* ${TCL_INSTALL}/bin/tclsh 
