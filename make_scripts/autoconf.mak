@@ -8,7 +8,7 @@ AUTOCONF_DIR      := ${DOWNLOAD_DIR}/autoconf-git
 autoconf_clean:
 	rm -rf ${AUTOCONF_INSTALL}
     
-autoconf: mkdir_install gcc make help2man | ${AUTOCONF_INSTALL}
+autoconf: mkdir_install gcc make help2man texinfo | ${AUTOCONF_INSTALL}
 
 ${AUTOCONF_DIR}:
 	@echo "Folder ${AUTOCONF_INSTALL} does not exist"
@@ -27,7 +27,7 @@ ${AUTOCONF_INSTALL}: | ${AUTOCONF_DIR}
         		git checkout -f ${AUTOCONF_REV};\
 	fi
 	cd ${AUTOCONF_DIR}; \
-		export PATH=${HELP2MAN_INSTALL}/bin:${PATH} ; \
+		export PATH=${HELP2MAN_INSTALL}/bin:${TEXINFO_INSTALL}/bin:${PATH} ; \
 		autoreconf -i ; \
 		./configure --prefix=${AUTOCONF_INSTALL} ; \
 		make clean; \
