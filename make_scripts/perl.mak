@@ -39,6 +39,8 @@ ifeq (${SYSTEM_PERL}, 0)
 		sh ./Configure -de -Dprefix=${PERL_INSTALL} -Dusedevel; \
 		make -j ${PROCESSOR}; \
 		make install
+		ln -s ${PERL_INSTALL}/bin/perl[0-9]* ${PERL_INSTALL}/bin/perl
+		ln -s ${PERL_INSTALL}/bin/cpan[0-9]* ${PERL_INSTALL}/bin/cpan
 else
 	@echo "Using System perl"
 endif
