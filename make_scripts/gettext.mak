@@ -7,9 +7,9 @@ GETTEXT_DIR      := ${DOWNLOAD_DIR}/gettext-git
 gettext_clean:
 	rm -rf $(GETTEXT_INSTALL)
     
-gettext: mkdir_install gcc make gperf gnulib autoconf | ${GETTEXT_INSTALL}
+gettext_git: mkdir_install gcc make gperf gnulib autoconf | ${GETTEXT_INSTALL}_git
 
-gettext_wget: mkdir_install gcc make | ${GETTEXT_INSTALL}
+gettext: mkdir_install gcc make | ${GETTEXT_INSTALL}
 
 ${GETTEXT_DIR}:
 	@echo "Folder ${GETTEXT_INSTALL} does not exist"
