@@ -14,6 +14,8 @@ ${GNAT_DIR}:
     
 ${GNAT_INSTALL}: | ${GNAT_DIR}
 	@echo "Folder ${GNAT_INSTALL} does not exist"
+	mkdir -p ${GNAT_INSTALL}
+	
 	${DOWNLOAD_DIR}/gnat-2021-20210519-x86_64-linux-bin
 
 # 	cd ${GNAT_DIR}; \
