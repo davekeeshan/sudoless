@@ -8,13 +8,17 @@ LD_LIBRARY=${LD_LIBRARY:=0}
 #Remove leading v if present
 REVNOV=${REV#v}
 
-#mkdir -p ${MODULEFILE_DIR}/${TOOL}
-mkdir -p ${MODULEFILE_DIR}/common/${TOOL}
-ln -fs common/${TOOL} ${MODULEFILE_DIR}/${TOOL} 
+COMMON_DIR=${MODULEFILE_DIR}/common/${TOOL}
+mkdir -p ${COMMON_DIR}
+COMMON_DIR=`readlink -f ${MODULEFILE_DIR}/common/${TOOL}`
+LINK_DIR=`readlink -f ${MODULEFILE_DIR}/${TOOL}`
+if [ ! -d ${LINK_DIR} ] ; then
+    ln -fs ${COMMON_DIR} ${LINK_DIR}
+fi
 
-FILE=${MODULEFILE_DIR}/${TOOL}/.version
+FILE=${COMMON_DIR}/.version
 if [ ${RELEASE} == 1 ] || [ ! -f ${FILE} ]; then
-    echo $FILE
+    #echo $FILE
     echo -e "\
 #%Module1.0\
 \n##\
@@ -22,8 +26,8 @@ if [ ${RELEASE} == 1 ] || [ ! -f ${FILE} ]; then
 " > ${FILE}
 fi
 
-FILE=${MODULEFILE_DIR}/${TOOL}/${REVNOV}
-echo ${FILE}
+FILE=${COMMON_DIR}/${REVNOV}
+#echo ${FILE}
 echo -e "\
 #%Module###################################################################### \
 \n##\
