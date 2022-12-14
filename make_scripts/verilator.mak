@@ -30,7 +30,7 @@ ${VERILATOR_INSTALL}: | ${VERILATOR_DIR}
 	cd ${VERILATOR_DIR}; \
 		export PATH=${FLEX_INSTALL}/bin:${BISON_INSTALL}/bin:${PATH}; \
 		autoconf; \
-		./configure --prefix=$(VERILATOR_INSTALL); \
+		./configure --prefix=${VERILATOR_INSTALL}; \
 		make clean; \
 		make -j ${PROCESSOR}; \
 		make install        
