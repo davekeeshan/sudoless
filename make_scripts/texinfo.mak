@@ -12,3 +12,6 @@ ${TEXINFO_INSTALL}:
 		make clean; \
 		make; \
 		make install
+
+texinfo_link:
+	ln -fs $(shell ls ${TEXINFO_INSTALL}/bin/*) ${INSTALL_DIR}/local/bin/.
