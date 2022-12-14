@@ -44,7 +44,7 @@ $(IVERILOG_INSTALL): | ${IVERILOG_DIR}
 	${MAKE} iverilog_module
 
 iverilog_module:
-	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${IVERILOG_NAME};\
 	export REV=${IVERILOG_REV};\
 	export RELEASE=${IVERILOG_RELEASE};\

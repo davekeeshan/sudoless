@@ -42,7 +42,7 @@ VERIBLE_GRELEASE:
 
 
 verible_module:
-	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${VERIBLE_NAME};\
 	export REV=${VERIBLE_REV};\
 	export RELEASE=${VERIBLE_RELEASE};\

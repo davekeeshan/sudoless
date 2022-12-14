@@ -89,7 +89,7 @@ else
 endif
 
 python_module:
-	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${PYTHON_NAME};\
 	export REV=${PYTHON_REV};\
 	export LD_LIBRARY=1;\
