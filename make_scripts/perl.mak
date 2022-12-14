@@ -5,7 +5,7 @@ PERL_REV           ?= v5.37.6
 PERL_NAME          := perl
 PERL_INSTALL       := ${INSTALL_DIR}/${PERL_NAME}/${PERL_REV}
 PERL_DIR           := ${DOWNLOAD_DIR}/perl-git
-SYSTEM_PERL        ?= 1
+PERL_RELEASE       := 0
 
 ifeq ($(SYSTEM_PERL), 0)
 	PATH := ${PERL_INSTALL}/bin:${PATH}

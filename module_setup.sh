@@ -8,9 +8,9 @@ LD_LIBRARY=${LD_LIBRARY:=0}
 #Remove leading v if present
 REVNOV=${REV#v}
 
-mkdir -p ${MODULEFILE_DIR}/${TOOL}
-mkdir -p ${MODULEFILE_DIR}/common
-#ln -fs ${MODULEFILE_DIR}/${TOOL} ${MODULEFILE_DIR}/common/${TOOL}
+#mkdir -p ${MODULEFILE_DIR}/${TOOL}
+mkdir -p ${MODULEFILE_DIR}/common/${TOOL}
+ln -fs common/${TOOL} ${MODULEFILE_DIR}/${TOOL} 
 
 FILE=${MODULEFILE_DIR}/${TOOL}/.version
 if [ ${RELEASE} == 1 ] || [ ! -f ${FILE} ]; then

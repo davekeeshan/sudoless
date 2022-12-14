@@ -7,8 +7,10 @@ IVERILOG_REPO     := git@github.com:steveicarus/iverilog.git
 IVERILOG_HEAD     ?= $(shell git ls-remote ${IVERILOG_REPO} | head -1 | awk '{print $$1}')
 IVERILOG_REV      ?= ${IVERILOG_HEAD}
 #IVERILOG_REV      ?= v11_0
-IVERILOG_INSTALL  := ${INSTALL_DIR}/iverilog/${IVERILOG_REV}
+IVERILOG_NAME     := iverilog
+IVERILOG_INSTALL  := ${INSTALL_DIR}/${IVERILOG_NAME}/${IVERILOG_REV}
 IVERILOG_DIR      := ${DOWNLOAD_DIR}/iverilog-git
+IVERILOG_RELEASE  := 0
 
 iverilog_clean:
 	rm -rf ${IVERILOG_INSTALL}
@@ -36,6 +38,14 @@ $(IVERILOG_INSTALL): | ${IVERILOG_DIR}
 		make clean; \
 		rm -rf configure; \
 		autoconf; \
-		./configure --prefix=$(IVERILOG_INSTALL); \
+		./configure --prefix=${IVERILOG_INSTALL}; \
 		make -j ${PROCESSOR}; \
-		make install        
+		make install      
+	${MAKE} iverilog_module
+
+iverilog_module:
+	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export TOOL=${IVERILOG_NAME};\
+	export REV=${IVERILOG_REV};\
+	export RELEASE=${IVERILOG_RELEASE};\
+		./module_setup.sh
