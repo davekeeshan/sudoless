@@ -1,7 +1,8 @@
 MODULES_REPO     := https://github.com/cea-hpc/modules.git
-MODULES_REV      ?= v5.2.0
+MODULES_REV      ?= v5.1.0
 MODULES_INSTALL  := ${INSTALL_DIR}/modules/${MODULES_REV}
 MODULES_DIR      := ${DOWNLOAD_DIR}/modules-git
+MODULEFILE_DIR   := ${INSTALL_DIR}/../modulefiles
 
 modules_clean:
 	rm -rf $(MODULES_INSTALL)
@@ -26,8 +27,15 @@ ${MODULES_INSTALL}: | ${MODULES_DIR}
 	cd ${MODULES_DIR}; \
 		export PATH=${VENV_PATH}/bin:${AUTOCONF_INSTALL}/bin:${PATH}; \
 		pip install sphinx; \
-		./configure --prefix=${MODULES_INSTALL} --with-tclsh=${TCL_INSTALL}/bin/tclsh --with-tcl=${TCL_INSTALL}/lib --with-python=${VENV_PATH}/bin/python; \
+		./configure --prefix=${MODULES_INSTALL} --with-tclsh=${TCL_INSTALL}/bin/tclsh --with-tcl=${TCL_INSTALL}/lib --with-python=${VENV_PATH}/bin/python --modulefilesdir=${MODULEFILE_DIR}; \
 		make clean; \
 		make -j ${PROCESSOR} ; \
 		make install
 	${MAKE} pydeactivate
+
+module_write:
+	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export TOOL=gcc;\
+	export REV=10.4.0;\
+	export RELEASE=0;\
+		./module_setup.sh

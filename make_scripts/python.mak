@@ -1,10 +1,12 @@
 # make python PYTHON_REV=v3.10.4
 CWD               ?= ${PWD}
 PYTHON_REV        ?= v3.10.7
-PYTHON_INSTALL    := ${INSTALL_DIR}/python/${PYTHON_REV}
+PYTHON_NAME       := python
+PYTHON_INSTALL    := ${INSTALL_DIR}/${PYTHON_NAME}/${PYTHON_REV}
 PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
 #PYTHON_REPO       := https://github.com/python/cpython.git
 PYTHON_REPO       := git@github.com:python/cpython.git
+PYTHON_RELEASE    := 0
 VENV_PATH         := ${CWD}/.venv_python/${OSID}
 SYSTEM_PYTHON     ?= 1
 
@@ -79,10 +81,20 @@ ifeq (${SYSTEM_PYTHON}, 0)
 			--without-static-libpython ; \
         make -j ${PROCESSOR} ;\
 		make install
+	ln -fs ${PYTHON_INSTALL}/bin/python3 ${PYTHON_INSTALL}/bin/python
 #	$(MAKE) python_link
+	$(MAKE) python_module
 else
 	@echo "Using System python"
 endif
+
+python_module:
+	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export TOOL=${PYTHON_NAME};\
+	export REV=${PYTHON_REV};\
+	export LD_LIBRARY=1;\
+	export RELEASE=${PYTHON_RELEASE};\
+		./module_setup.sh
 
 python_link:
 	ln -fs $(shell ls ${PYTHON_INSTALL}/lib/libpython3.*.so*) ${INSTALL_DIR}/local/lib/.

@@ -2,7 +2,8 @@
 PERL_REPO          := https://github.com/Perl/perl5.git
 #PERL_REPO          := git@github.com:Perl/perl5.git
 PERL_REV           ?= v5.37.6
-PERL_INSTALL       := ${INSTALL_DIR}/perl/${PERL_REV}
+PERL_NAME          := perl
+PERL_INSTALL       := ${INSTALL_DIR}/${PERL_NAME}/${PERL_REV}
 PERL_DIR           := ${DOWNLOAD_DIR}/perl-git
 SYSTEM_PERL        ?= 1
 
@@ -44,3 +45,10 @@ ifeq (${SYSTEM_PERL}, 0)
 else
 	@echo "Using System perl"
 endif
+
+perl_module:
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export TOOL=${PERL_NAME};\
+	export REV=${PERL_REV};\
+	export RELEASE=${PERL_RELEASE};\
+		./module_setup.sh

@@ -1,8 +1,10 @@
 #GCC_REPO           := https://github.com/gcc-mirror/gcc.git
 GCC_REPO           := git@github.com:gcc-mirror/gcc.git
 GCC_REV            ?= 12.1.0
-GCC_INSTALL        := ${INSTALL_DIR}/gcc/${GCC_REV}
+GCC_NAME           := gcc
+GCC_INSTALL        := ${INSTALL_DIR}/${GCC_NAME}/${GCC_REV}
 GCC_DIR            := ${DOWNLOAD_DIR}/gcc-git
+GCC_RELEASE        := 0
 SYSTEM_GCC         ?= 1
 
 ifeq ($(SYSTEM_GCC), 0)
@@ -57,3 +59,11 @@ else
 		make install
 	rm -rf ${GCC_DIR}/objdir
 endif
+
+gcc_module:
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export TOOL=${GCC_NAME};\
+	export REV=${GCC_REV};\
+	export LD_LIBRARY=1;\
+	export RELEASE=${GCC_RELEASE};\
+		./module_setup.sh
