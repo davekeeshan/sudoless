@@ -9,8 +9,8 @@ VENV_PATH         := ${CWD}/.venv_python/${OSID}
 SYSTEM_PYTHON     ?= 1
 
 ifeq ($(SYSTEM_PYTHON), 0)
-	PATH := $(PYTHON_INSTALL)/bin:${PATH}
-	LD_LIBRARY_PATH := $(PYTHON_INSTALL)/lib:${LD_LIBRARY_PATH}
+	PATH := ${PYTHON_INSTALL}/bin:${PATH}
+	LD_LIBRARY_PATH := ${PYTHON_INSTALL}/lib:${LD_LIBRARY_PATH}
 # else
 # 	LD_LIBRARY_PATH := /projects/flow/tools/x86_64-rocky8/python/v3.10.7/lib:${LD_LIBRARY_PATH}
 # 	#LD_LIBRARY_PATH := $(shell which python)/../../lib:${LD_LIBRARY_PATH}
@@ -97,3 +97,29 @@ python_link:
 #             --with-system-expat \
 #        make -j ${PROCESSOR} > temp.txt;\
 
+pyuser:
+	mkdir -p ${HOME}/.venv
+	${PYTHON_INSTALL}/bin/python3 -m venv ${HOME}/.venv/Python-${PYTHON_REV}
+	@sed -i "s|deactivate () {|deactivate () {\
+\n    if [ -n \"\$${_OLD_LD_LIBRARY_PATH:-}\" ] ; then\
+\n        if [ \$${_OLD_LD_LIBRARY_PATH} = 0 ] ; then \
+\n            unset LD_LIBRARY_PATH \
+\n        else \
+\n            export LD_LIBRARY_PATH=\$${_OLD_LD_LIBRARY_PATH} \
+\n        fi \
+\n        unset _OLD_LD_LIBRARY_PATH \
+\n    fi \
+\n \
+|g" ${HOME}/.venv/Python-${PYTHON_REV}/bin/activate
+
+	@sed -i "s|deactivate nondestructive|deactivate nondestructive \
+\n \
+\nLOCAL_DIR=\"${PYTHON_INSTALL}\" \
+\nif [ -z \$${LD_LIBRARY_PATH+x} ]; then \
+\n    export _OLD_LD_LIBRARY_PATH=0 \
+\n    export LD_LIBRARY_PATH=\"\$${LOCAL_DIR}/lib\" \
+\nelse \
+\n    export _OLD_LD_LIBRARY_PATH=\$${LD_LIBRARY_PATH} \
+\n    export LD_LIBRARY_PATH=\"\$${LOCAL_DIR}/lib:\$${LD_LIBRARY_PATH}\" \
+\nfi \
+|g" ${HOME}/.venv/Python-${PYTHON_REV}/bin/activate
