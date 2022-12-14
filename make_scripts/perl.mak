@@ -46,7 +46,7 @@ else
 	@echo "Using System perl"
 endif
 
-perl_module:
+perl_module: ${PERL_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${PERL_NAME};\
 	export REV=${PERL_REV};\

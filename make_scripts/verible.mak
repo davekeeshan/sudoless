@@ -41,7 +41,7 @@ VERIBLE_GRELEASE:
 	cd ${DOWNLOAD_DIR} ; cp -r verible-${VERIBLE_GRELEASE} ${INSTALL_DIR}/verible/${VERIBLE_GRELEASE}
 
 
-verible_module:
+verible_module: ${VERIBLE_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${VERIBLE_NAME};\
 	export REV=${VERIBLE_REV};\

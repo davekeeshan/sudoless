@@ -88,7 +88,7 @@ else
 	@echo "Using System python"
 endif
 
-python_module:
+python_module: ${PYTHON_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${PYTHON_NAME};\
 	export REV=${PYTHON_REV};\
