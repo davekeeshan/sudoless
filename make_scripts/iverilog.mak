@@ -43,7 +43,7 @@ $(IVERILOG_INSTALL): | ${IVERILOG_DIR}
 		make install      
 	${MAKE} iverilog_module
 
-iverilog_module: $(IVERILOG_INSTALL)
+iverilog_module: ${IVERILOG_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${IVERILOG_NAME};\
 	export REV=${IVERILOG_REV};\

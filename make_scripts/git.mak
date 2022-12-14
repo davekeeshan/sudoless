@@ -43,7 +43,7 @@ ifeq (${SYSTEM_GIT}, 0)
 		make all -j ${PROCESSOR}; \
 		make install        
 	${MAKE} pydeactivate
-	${MAKE} git_link
+	#${MAKE} git_link
 else
 	@echo "Using System GIT"
 endif

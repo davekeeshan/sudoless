@@ -60,7 +60,7 @@ else
 	rm -rf ${GCC_DIR}/objdir
 endif
 
-gcc_module:
+gcc_module: ${GCC_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export TOOL=${GCC_NAME};\
 	export REV=${GCC_REV};\

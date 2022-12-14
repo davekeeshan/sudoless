@@ -1,6 +1,7 @@
 BASH_REPO     := https://github.com/bminor/bash.git
 BASH_REV      ?= bash-5.2
-BASH_INSTALL  := ${INSTALL_DIR}/bash/${BASH_REV}
+BASH_NAME     := bash
+BASH_INSTALL  := ${INSTALL_DIR}/${BASH_NAME}/${BASH_REV}
 BASH_DIR      := ${DOWNLOAD_DIR}/bash-git
 SYSTEM_BASH   ?= 1
 
@@ -47,3 +48,10 @@ endif
 
 bash_link:
 	ln -fs $(shell ls ${BASH_INSTALL}/bin/*) ${INSTALL_DIR}/local/bin/.
+
+bash_module: ${BASH_INSTALL}
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export TOOL=${BASH_NAME};\
+	export REV=${BASH_REV};\
+	export RELEASE=${BASH_RELEASE};\
+		./module_setup.sh
