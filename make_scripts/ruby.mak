@@ -1,7 +1,10 @@
 RUBY_REPO       := https://github.com/ruby/ruby.git
+#RUBY_REPO       := git@github.com:ruby/ruby.git
 RUBY_REV        ?= v3_1_3
 RUBY_INSTALL    := ${INSTALL_DIR}/ruby/${RUBY_REV}
 RUBY_DIR        := ${DOWNLOAD_DIR}/ruby-git
+
+LD_LIBRARY_PATH := ${OPENSSL_INSTALL}/lib:${LD_LIBRARY_PATH}
 
 ruby: mkdir_install gcc make openssl autoconf libffi | $(RUBY_INSTALL)
 
@@ -30,7 +33,7 @@ ${RUBY_INSTALL}: | ${RUBY_DIR}
 		export LDFLAGS="-L${LIBFFI_INSTALL}/lib64"; \
 		./autogen.sh; \
 		cd build; \
-			./configure --prefix=${RUBY_INSTALL} --with-openssl-dir=${OPENSSL_INSTALL} ;\
+			../configure --prefix=${RUBY_INSTALL} --with-openssl-dir=${OPENSSL_INSTALL} ;\
 			make clean ; \
 			make -j ${PROCESSOR} ; \
 			make install	

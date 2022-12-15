@@ -29,6 +29,7 @@ ${TCL_INSTALL}: | ${TCL_DIR}
 		make clean ; \
 		make -j ${PROCESSOR} ; \
 		make install
-
+	${MAKE} tcl_link
+	
 tcl_link:
 	ln -s ${TCL_INSTALL}/bin/tclsh* ${TCL_INSTALL}/bin/tclsh 

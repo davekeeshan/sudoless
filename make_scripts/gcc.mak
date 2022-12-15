@@ -55,13 +55,14 @@ else
 			--enable-languages=c,c++,ada \
 			--prefix=${GCC_INSTALL}; \
 		make clean;\
-		make -j ${PROCESSOR};\
+		make -j ${PROCESSOR}; \
 		make install
 	rm -rf ${GCC_DIR}/objdir
 endif
 
 gcc_module: ${GCC_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${GCC_NAME};\
 	export REV=${GCC_REV};\
 	export LD_LIBRARY=1;\

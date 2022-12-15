@@ -51,7 +51,8 @@ bash_link:
 
 bash_module: ${BASH_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${BASH_NAME};\
 	export REV=${BASH_REV};\
 	export RELEASE=${BASH_RELEASE};\
-		./module_setup.sh
+		bash ./module_setup.sh

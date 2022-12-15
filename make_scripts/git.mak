@@ -1,8 +1,10 @@
 #GIT_REPO           := https://github.com/git/git.git
 GIT_REPO           := git@github.com:git/git.git
 GIT_REV            ?= v2.38.1
-GIT_INSTALL        := ${INSTALL_DIR}/git/${GIT_REV}
+GIT_NAME           := git
+GIT_INSTALL        := ${INSTALL_DIR}/${GIT_NAME}/${GIT_REV}
 GIT_DIR            := ${DOWNLOAD_DIR}/git-git
+GIT_RELEASE        := 0
 SYSTEM_GIT         ?= 1
 
 ifeq ($(SYSTEM_GIT), 0)
@@ -12,7 +14,7 @@ endif
 git_clean:
 	rm -rf ${GIT_INSTALL}
 
-git: mkdir_install pyactivate gcc make xmlto gettext | ${GIT_INSTALL}
+git: mkdir_install gcc make xmlto gettext | ${GIT_INSTALL}
 
 ${GIT_DIR}: 
 ifeq (${SYSTEM_GIT}, 0)
@@ -23,11 +25,11 @@ endif
 ${GIT_INSTALL}: | ${GIT_DIR}
 ifeq (${SYSTEM_GIT}, 0)
 	@echo "Folder ${GIT_INSTALL} does not exist"
+	${MAKE} pyactivate
 	if [ "${GIT_REV}" = "" ]; then \
 		cd ${GIT_DIR}; \
 			git fetch; \
-        	git checkout -f ${GIT_REV};\
-        	git checkout -f ${GIT_REV};\
+        	git checkout -f master;\
 	else \
 		cd ${GIT_DIR}; \
 			git fetch; \
@@ -42,6 +44,7 @@ ifeq (${SYSTEM_GIT}, 0)
 		make clean; \
 		make all -j ${PROCESSOR}; \
 		make install        
+	${MAKE} git_module
 	${MAKE} pydeactivate
 	#${MAKE} git_link
 else
@@ -50,4 +53,12 @@ endif
 
 git_link:
 	ln -fs $(shell ls ${GIT_INSTALL}/bin/*) ${INSTALL_DIR}/local/bin/.
+
+git_module: ${GIT_INSTALL}
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
+	export TOOL=${GIT_NAME};\
+	export REV=${GIT_REV};\
+	export RELEASE=${GIT_RELEASE};\
+		bash ./module_setup.sh
 

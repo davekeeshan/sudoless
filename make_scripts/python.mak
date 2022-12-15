@@ -90,11 +90,12 @@ endif
 
 python_module: ${PYTHON_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${PYTHON_NAME};\
 	export REV=${PYTHON_REV};\
 	export LD_LIBRARY=1;\
 	export RELEASE=${PYTHON_RELEASE};\
-		./module_setup.sh
+		bash ./module_setup.sh
 
 python_link:
 	ln -fs $(shell ls ${PYTHON_INSTALL}/lib/libpython3.*.so*) ${INSTALL_DIR}/local/lib/.

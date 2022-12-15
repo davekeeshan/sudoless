@@ -45,7 +45,9 @@ $(IVERILOG_INSTALL): | ${IVERILOG_DIR}
 
 iverilog_module: ${IVERILOG_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${IVERILOG_NAME};\
 	export REV=${IVERILOG_REV};\
+	export EXTRA_OPTS="    prepend-path     LD_LIBRARY_PATH ${GCC_INSTALL}/lib64";\
 	export RELEASE=${IVERILOG_RELEASE};\
 		./module_setup.sh
