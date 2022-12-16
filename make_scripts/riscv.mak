@@ -1,5 +1,5 @@
 RISCV_REPO     := https://github.com/riscv/riscv-gnu-toolchain
-RISCV_REV      ?= f2a2c87
+RISCV_REV      ?= 2022.11.23
 RISCV_INSTALL  := ${INSTALL_DIR}/riscv/${RISCV_REV}
 RISCV_DIR      := ${DOWNLOAD_DIR}/riscv-git
 
