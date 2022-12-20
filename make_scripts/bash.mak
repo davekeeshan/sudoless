@@ -41,7 +41,7 @@ ifeq (${SYSTEM_BASH}, 0)
 		make clean; \
 		make; \
 		make install
-	$(MAKE) bash_link
+	#$(MAKE) bash_link
 else
 	@echo "Using System Bash"
 endif
