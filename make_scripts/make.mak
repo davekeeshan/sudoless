@@ -28,6 +28,7 @@ ifeq (${SYSTEM_MAKE}, 0)
 		make install
 	ln -s ${MAKE_INSTALL}/bin/make ${MAKE_INSTALL}/bin/gmake
 	${MAKE} make_module
+	rm -rf ${DOWNLOAD_DIR}/make-${MAKE_REV}
 else
 	@echo "Using System MAKE"
 endif
