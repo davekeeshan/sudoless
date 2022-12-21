@@ -16,13 +16,13 @@ fi
 #Remove leading v if present
 REVNOV=${REV#v}
 
-COMMON_DIR=${MODULEFILE_DIR}/common/${TOOL}
+COMMON_DIR=${MODULEFILE_DIR}/${TOOL}
 mkdir -p ${COMMON_DIR}
-COMMON_DIR=`readlink -f ${MODULEFILE_DIR}/common/${TOOL}`
-LINK_DIR=`readlink -f ${MODULEFILE_DIR}/${TOOL}`
-if [ ! -d ${LINK_DIR} ] ; then
-    ln -fs ${COMMON_DIR} ${LINK_DIR}
-fi
+COMMON_DIR=`readlink -f ${MODULEFILE_DIR}/${TOOL}`
+#LINK_DIR=`readlink -f ${MODULEFILE_DIR}/${TOOL}`
+#if [ ! -d ${LINK_DIR} ] ; then
+#    ln -fs ${COMMON_DIR} ${LINK_DIR}
+#fi
 
 FILE=${COMMON_DIR}/.version
 if [ ${RELEASE} == 1 ] || [ ! -f ${FILE} ]; then
