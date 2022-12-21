@@ -1,13 +1,15 @@
 #TK_REPO     := https://github.com/tcltk/tk.git
 TK_REPO     := git@github.com:tcltk/tk.git
 TK_REV      ?= core-8-6-12
-TK_INSTALL  := ${INSTALL_DIR}/tk/${TK_REV}
-TK_DIR      := ${DOWNLOAD_DIR}/tk-git
+TK_NAME     := tk
+TK_INSTALL  := ${INSTALL_DIR}/${TK_NAME}/${TK_REV}
+TK_DIR      := ${DOWNLOAD_DIR}/${TK_NAME}-git
+TK_RELEASE  := 0
 
-tk_clean:
+${TK_NAME}_clean:
 	rm -rf $(TK_INSTALL)
     
-tk: mkdir_install gcc make tcl | $(TK_INSTALL)
+${TK_NAME}: mkdir_install gcc make tcl | $(TK_INSTALL)
 
 ${TK_DIR}:
 	@echo "Folder ${TK_INSTALL} does not exist"
@@ -30,4 +32,13 @@ ${TK_INSTALL}: | ${TK_DIR}
 		make clean ; \
 		make; \
 		make install
-	#rm -rf tk*
+
+${TK_NAME}_module: ${TK_INSTALL}
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
+	export TOOL=${TK_NAME};\
+	export REV=${TK_REV};\
+	export LD_LIBRARY=1;\
+	export RELEASE=${TK_RELEASE};\
+		bash ./module_setup.sh
+

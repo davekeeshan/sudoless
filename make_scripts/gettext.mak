@@ -47,4 +47,5 @@ ${GETTEXT_INSTALL}: | ${DOWNLOAD_DIR}/gettext-${GETTEXT_REV}.tar.gz
 		./configure --prefix=${GETTEXT_INSTALL}; \
 		make clean; \
 		make; \
-		make install		
+		make install
+	rm -rf 	${DOWNLOAD_DIR}/gettext-${GETTEXT_REV}	

@@ -20,3 +20,4 @@ ${GPERF_INSTALL}: | ${GPERF_DIR}
 		make clean; \
 		make -j ${PROCESSOR}; \
 		make install
+	rm -rf ${GPERF_DIR}

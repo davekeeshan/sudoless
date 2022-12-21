@@ -17,3 +17,4 @@ ${CMAKE_INSTALL}: | ${CMAKE_DIR}
 		make clean; \
 		make; \
 		make install;
+	rm -rf ${CMAKE_DIR}

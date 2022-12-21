@@ -19,4 +19,4 @@ ${XMLTO_INSTALL}:| ${XMLTO_DIR}
 		./configure --prefix=${XMLTO_INSTALL}; \
 		make; \
 		make install
-	#rm -rf xmlto*
+	rm -rf ${XMLTO_DIR}

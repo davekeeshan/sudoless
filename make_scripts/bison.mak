@@ -44,3 +44,4 @@ ${BISON_INSTALL}: | ${BISON_DIR}
 		make clean; \
 		make; \
 		make install
+	rm -rf ${BISON_DIR}

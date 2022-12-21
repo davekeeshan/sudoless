@@ -58,9 +58,10 @@ else
 		make -j ${PROCESSOR}; \
 		make install
 	rm -rf ${GCC_DIR}/objdir
+	$(MAKE) ${GCC_NAME}_module
 endif
 
-gcc_module: ${GCC_INSTALL}
+${GCC_NAME}_module: ${GCC_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${GCC_NAME};\

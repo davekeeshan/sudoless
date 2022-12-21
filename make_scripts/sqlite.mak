@@ -18,10 +18,11 @@ $(SQLITE_INSTALL):| $(SQLITE_DIR)
 	@echo "Folder $(SQLITE_INSTALL) does not exist"
 	cd ${SQLITE_DIR}; \
 		export PATH=$(TCL_INSTALL)/bin:${PATH}; \
-	    mkdir -p build; \
+                mkdir -p build; \
 		cd build; \
 			../configure --prefix=${SQLITE_INSTALL} ; \
 			make clean; \
 			make; \
 			make sqlite3.c; \
  			make install
+		rm -rf ${SQLITE_DIR}

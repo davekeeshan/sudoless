@@ -12,6 +12,7 @@ ${TEXINFO_INSTALL}:
 		make clean; \
 		make; \
 		make install
+	rm rf ${DOWNLOAD_DIR}/texinfo-${TEXINFO_REV}
 
 texinfo_link:
 	ln -fs $(shell ls ${TEXINFO_INSTALL}/bin/*) ${INSTALL_DIR}/local/bin/.

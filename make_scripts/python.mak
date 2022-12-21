@@ -29,10 +29,10 @@ pyactivate: | python
 	export PATH=${VENV_PATH}/bin:${PATH} ; \
 	pip install -U pip 
 
-python_clean:
+${PYTHON_NAME}_clean:
 	rm -rf ${PYTHON_INSTALL}
 
-python: mkdir_install | ${PYTHON_INSTALL}
+${PYTHON_NAME}: mkdir_install | ${PYTHON_INSTALL}
 ifeq (${SYSTEM_PYTHON}, 0)
 	@echo "Make sure you set:"
 	@echo "    export LD_LIBRARY_PATH=${PYTHON_INSTALL}/lib"
@@ -89,7 +89,7 @@ else
 	@echo "Using System python"
 endif
 
-python_module: ${PYTHON_INSTALL}
+${PYTHON_NAME}_module: ${PYTHON_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${PYTHON_NAME};\
@@ -98,7 +98,7 @@ python_module: ${PYTHON_INSTALL}
 	export RELEASE=${PYTHON_RELEASE};\
 		bash ./module_setup.sh
 
-python_link:
+${PYTHON_NAME}_link:
 	ln -fs $(shell ls ${PYTHON_INSTALL}/lib/libpython3.*.so*) ${INSTALL_DIR}/local/lib/.
 
 # 		export PATH=$(GCC_INSTALL)/bin:$(MAKE_INSTALL)/bin:${PATH}; \

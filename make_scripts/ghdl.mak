@@ -5,13 +5,15 @@
 # make GHDL_REV=v1.0.0 GCC_REV=10.4.0 ghdl_gcc 
 # make GHDL_REV=v2.0.0 GCC_REV=10.4.0 ghdl_gcc 
 GHDL_REPO          := https://github.com/ghdl/ghdl.git
-#GHDL_HEAD          ?= ${shell git ls-remote ${GHDL_REPO} | head -1 | awk '{print $$1}'}
-#GHDL_REV           ?= ${GHDL_HEAD}
-GHDL_REV           ?= v2.0.0
+GHDL_HEAD          ?= ${shell git ls-remote ${GHDL_REPO} | head -1 | awk '{print $$1}'}
+GHDL_REV           ?= ${GHDL_HEAD}
+#GHDL_REV           ?= v2.0.0
 GHDL_LLVM_INSTALL  := ${INSTALL_DIR}/ghdl-llvm/${GHDL_REV}
 GHDL_MCODE_INSTALL := ${INSTALL_DIR}/ghdl-mcode/${GHDL_REV}
-GHDL_GCC_INSTALL   := ${INSTALL_DIR}/ghdl-gcc/${GHDL_REV}
-GHDL_DIR           := ${DOWNLOAD_DIR}/ghdl-git
+GHDL_GCC_NAME      := ghdl-gcc
+GHDL_GCC_INSTALL   := ${INSTALL_DIR}/${GHDL_GCC_NAME}/${GHDL_REV}
+GHDL_GCC_RELEASE   := 0
+GHDL_DIR           := ${DOWNLOAD_DIR}/${GHDL_GCC_NAME}-git
 
 ${GHDL_DIR}: 
 	@echo "Folder ${GHDL_DIR} does not exist"
@@ -21,12 +23,12 @@ ghdl_git:| ${GHDL_DIR}
 	if [ "${GHDL_REV}" = "" ]; then \
 		cd ${GHDL_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+                        git checkout -f master;\
 	else \
 		cd ${GHDL_DIR}; \
 			git fetch; \
-        	git checkout -f ${GHDL_REV};\
-    fi
+                        git checkout -f ${GHDL_REV};\
+        fi
 
 ghdl_mcode_clean:
 	rm -rf ${GHDL_MCODE_INSTALL}
@@ -61,10 +63,10 @@ ${GHDL_LLVM_INSTALL}: ghdl_git
 # 		export LD_LIBRARY_PATH=${GCC_INSTALL}/lib64:${GLIBC_INSTALL}/lib; \
 # 		llvm-config; \
     
-ghdl_gcc_clean:
+${GHDL_GCC_NAME}_clean:
 	rm -rf ${GHDL_GCC_INSTALL}
 
-ghdl_gcc: mkdir_install make texinfo | ${GHDL_GCC_INSTALL}
+${GHDL_GCC_NAME}: mkdir_install make texinfo | ${GHDL_GCC_INSTALL}
 
 ${GHDL_GCC_INSTALL}: gcc_git ghdl_git
 	@echo "Folder ${GHDL_GCC_INSTALL} does not exist"
@@ -91,3 +93,14 @@ ${GHDL_GCC_INSTALL}: gcc_git ghdl_git
 	cd ${GHDL_DIR}/build; \
 		make ghdllib; \
 		make install
+	$(MAKE) ${GHDL_GCC_NAME}_module
+
+${GHDL_GCC_NAME}_module: ${GHDL_GCC_INSTALL}
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
+	export TOOL=${GHDL_GCC_NAME};\
+	export REV=${GHDL_REV};\
+	export LD_LIBRARY=1;\
+	export RELEASE=${GHDL_GCC_RELEASE};\
+		bash ./module_setup.sh
+
