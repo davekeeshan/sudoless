@@ -8,6 +8,7 @@ PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
 PYTHON_REPO       := git@github.com:python/cpython.git
 PYTHON_RELEASE    := 0
 VENV_PATH         := ${CWD}/.venv_python
+USER_VENV         := Python-${PYTHON_REV}
 SYSTEM_PYTHON     ?= 1
 
 ifeq ($(SYSTEM_PYTHON), 0)
@@ -112,7 +113,7 @@ python_link:
 
 pyuser:
 	mkdir -p ${HOME}/.venv
-	${PYTHON_INSTALL}/bin/python3 -m venv ${HOME}/.venv/Python-${PYTHON_REV}
+	${PYTHON_INSTALL}/bin/python3 -m venv ${HOME}/.venv/${USER_VENV}
 	@sed -i "s|deactivate () {|deactivate () {\
 \n    if [ -n \"\$${_OLD_LD_LIBRARY_PATH:-}\" ] ; then\
 \n        if [ \$${_OLD_LD_LIBRARY_PATH} = 0 ] ; then \
@@ -123,7 +124,7 @@ pyuser:
 \n        unset _OLD_LD_LIBRARY_PATH \
 \n    fi \
 \n \
-|g" ${HOME}/.venv/Python-${PYTHON_REV}/bin/activate
+|g" ${HOME}/.venv/${USER_VENV}/bin/activate
 
 	@sed -i "s|deactivate nondestructive|deactivate nondestructive \
 \n \
@@ -135,4 +136,4 @@ pyuser:
 \n    export _OLD_LD_LIBRARY_PATH=\$${LD_LIBRARY_PATH} \
 \n    export LD_LIBRARY_PATH=\"\$${LOCAL_DIR}/lib:\$${LD_LIBRARY_PATH}\" \
 \nfi \
-|g" ${HOME}/.venv/Python-${PYTHON_REV}/bin/activate
+|g" ${HOME}/.venv/${USER_VENV}/bin/activate
