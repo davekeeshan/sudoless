@@ -7,7 +7,7 @@ PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
 #PYTHON_REPO       := https://github.com/python/cpython.git
 PYTHON_REPO       := git@github.com:python/cpython.git
 PYTHON_RELEASE    := 0
-VENV_PATH         := ${CWD}/.venv_python/${OSID}
+VENV_PATH         := ${CWD}/.venv_python
 SYSTEM_PYTHON     ?= 1
 
 ifeq ($(SYSTEM_PYTHON), 0)
@@ -24,7 +24,7 @@ pydeactivate:
 pyactivate: | python
 	@$(MAKE) pydeactivate
 	export LD_LIBRARY_PATH=${PYTHON_INSTALL}/lib;\
-	${PYTHON_INSTALL}/bin/python3 -m venv ${VENV_PATH};\
+	python3 -m venv ${VENV_PATH};\
 	export PATH=${VENV_PATH}/bin:${PATH} ; \
 	pip install -U pip 
 
@@ -54,12 +54,12 @@ ifeq (${SYSTEM_PYTHON}, 0)
 	if [ "${PYTHON_REV}" = "" ]; then \
 		cd ${PYTHON_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+                        git checkout -f master;\
 	else \
 		cd ${PYTHON_DIR}; \
 			git fetch; \
-        	git checkout -f ${PYTHON_REV};\
-    fi
+                        git checkout -f ${PYTHON_REV};\
+        fi
 	cd ${PYTHON_DIR}; \
 		export CFLAGS="-I${BZIP2_INSTALL}/include -I${XY_INSTALL}/include -I${NCURSES_INSTALL}/usr/include"; \
 		export LDFLAGS="-Wl,-rpath=${OPENSSL_INSTALL}/lib,-rpath=${LIBFFI_INSTALL}/lib64,-rpath=${SQLITE_INSTALL}/lib,-rpath=${BZIP2_INSTALL}/lib,-rpath=${XY_INSTALL}/lib,-rpath=${TCL_INSTALL}/lib,-rpath=${TK_INSTALL}/lib,-rpath=${NCURSES_INSTALL}/usr/lib -L${LIBFFI_INSTALL}/lib64 -L${BZIP2_INSTALL}/lib -L${XY_INSTALL}/lib -L${NCURSES_INSTALL}/usr/lib"; \
@@ -67,19 +67,19 @@ ifeq (${SYSTEM_PYTHON}, 0)
 		rm -rf build; mkdir build; \
 		make clean; \
 		sed -i "s|'\/usr\/local\/include\/sqlite3',|'\/usr\/local\/include\/sqlite3',\n                             '${SQLITE_INSTALL}\/include',|g" setup.py; \
-        ./configure \
+                ./configure \
 			--with-ensurepip=install \
 			--enable-shared \
 			--prefix=${PYTHON_INSTALL} \
 			--with-openssl=${OPENSSL_INSTALL} \
 			--with-tcltk-includes='-I${TCL_INSTALL}/include -I${TK_INSTALL}/include' \
 			--with-tcltk-libs='-L${TCL_INSTALL}/lib -L${TK_INSTALL}/lib -ltcl8.6 -ltk8.6' \
-            --enable-optimizations \
-            --with-computed-gotos=yes \
-            --with-dbmliborder=gdbm:ndbm:bdb \
-            --enable-loadable-sqlite-extensions \
+                        --enable-optimizations \
+                        --with-computed-gotos=yes \
+                        --with-dbmliborder=gdbm:ndbm:bdb \
+                        --enable-loadable-sqlite-extensions \
 			--without-static-libpython ; \
-        make -j ${PROCESSOR} ;\
+                make -j ${PROCESSOR} ;\
 		make install
 	ln -fs ${PYTHON_INSTALL}/bin/python3 ${PYTHON_INSTALL}/bin/python
 #	$(MAKE) python_link
