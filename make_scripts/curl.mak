@@ -8,7 +8,7 @@ CURL_RELEASE    := 0
 SYSTEM_CURL     ?= 1
 
 ifeq ($(SYSTEM_CURL), 0)
-	LD_LIBRARY_PATH:=${OPENSSL_INSTALL}/lib:${CURL_INSTALL}/lib:${LD_LIBRARY_PATH}
+	LD_LIBRARY_PATH:=${OPENSSL_INSTALL}/lib64:${CURL_INSTALL}/lib:${LD_LIBRARY_PATH}
 	PATH:=${CURL_INSTALL}/bin:${PATH}
 endif
 
@@ -29,12 +29,12 @@ ifeq (${SYSTEM_CURL}, 0)
 	if [ "${CURL_REV}" = "" ]; then \
 		cd ${CURL_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+			git checkout -f master;\
 	else \
 		cd ${CURL_DIR}; \
 			git fetch; \
-        	git checkout -f ${CURL_REV};\
-    fi
+			git checkout -f ${CURL_REV};\
+	fi
 	cd ${CURL_DIR}; \
 		export PATH=${AUTOCONF_INSTALL}/bin:${PATH} ;\
 		autoreconf -fi ;\

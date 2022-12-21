@@ -6,7 +6,7 @@ LIBFFI_DIR        := ${DOWNLOAD_DIR}/libffi-git
 libffi_clean:
 	rm -rf ${LIBFFI_INSTALL}
 
-libffi: mkdir_install gcc make texinfo | ${LIBFFI_INSTALL}
+libffi: mkdir_install gcc make texinfo autoconf | ${LIBFFI_INSTALL}
 
 ${LIBFFI_DIR}:
 	@echo "Folder ${LIBFFI_DIR} does not exist"

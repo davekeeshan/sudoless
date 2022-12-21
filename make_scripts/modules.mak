@@ -18,16 +18,16 @@ ${MODULES_INSTALL}: | ${MODULES_DIR}
 	if [ "${MODULES_REV}" = "" ]; then \
 		cd ${MODULES_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+        		git checkout -f master;\
 	else \
 		cd ${MODULES_DIR}; \
 			git fetch; \
-        	git checkout -f ${MODULES_REV};\
-    fi
+        		git checkout -f ${MODULES_REV};\
+	fi
 	cd ${MODULES_DIR}; \
 		export PATH=${VENV_PATH}/bin:${AUTOCONF_INSTALL}/bin:${PATH}; \
 		pip install sphinx; \
-		./configure --prefix=${MODULES_INSTALL} --with-tclsh=${TCL_INSTALL}/bin/tclsh --with-tcl=${TCL_INSTALL}/lib --with-python=${VENV_PATH}/bin/python --modulefilesdir=${MODULEFILE_DIR}; \
+		./configure --prefix=${MODULES_INSTALL} --with-tclsh=${TCL_INSTALL}/bin/tclsh --with-tcl=${TCL_INSTALL}/lib --with-python=${PYTHON_INSTALL}/bin/python --modulefilesdir=${MODULEFILE_DIR}; \
 		make clean; \
 		make -j ${PROCESSOR} ; \
 		make install

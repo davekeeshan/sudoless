@@ -63,6 +63,7 @@ make_link:
 
 make_module: $(MAKE_INSTALL)
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${MAKE_NAME};\
 	export REV=${MAKE_REV};\
 	export RELEASE=${MAKE_RELEASE};\

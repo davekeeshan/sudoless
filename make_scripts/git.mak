@@ -8,13 +8,14 @@ GIT_RELEASE        := 0
 SYSTEM_GIT         ?= 1
 
 ifeq ($(SYSTEM_GIT), 0)
-	PATH := $(GIT_INSTALL)/bin:${PATH}
+	LD_LIBRARY_PATH:=${OPENSSL_INSTALL}/lib64:${LD_LIBRARY_PATH}
+	PATH := $(GIT_INSTALL)/bin:$(CURL_INSTALL)/bin:${PATH}
 endif
 
 git_clean:
 	rm -rf ${GIT_INSTALL}
 
-git: mkdir_install gcc make xmlto gettext | ${GIT_INSTALL}
+git: mkdir_install gcc make xmlto gettext openssl | ${GIT_INSTALL}
 
 ${GIT_DIR}: 
 ifeq (${SYSTEM_GIT}, 0)
@@ -29,12 +30,12 @@ ifeq (${SYSTEM_GIT}, 0)
 	if [ "${GIT_REV}" = "" ]; then \
 		cd ${GIT_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+			git checkout -f master;\
 	else \
 		cd ${GIT_DIR}; \
 			git fetch; \
-        	git checkout -f ${GIT_REV};\
-    fi
+			git checkout -f ${GIT_REV};\
+	fi
 	cd ${GIT_DIR}; \
 		export PATH=${VENV_PATH}/bin:${XMLTO_INSTALL}/bin:${GETTEXT_INSTALL}/bin:${PATH}; \
 		export LD_LIBRARY_PATH=${INSTALL_DIR}/local/lib; \

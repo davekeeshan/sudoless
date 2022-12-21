@@ -14,6 +14,7 @@ verible: mkdir_install bazel_release gcc bison flex python | ${VERIBLE_INSTALL}
 
 ${VERIBLE_DIR}:
 	@echo "Folder ${VERIBLE_DIR} does not exist"
+	echo ${LD_LIBRARY_PATH}
 	git clone ${VERIBLE_REPO} ${VERIBLE_DIR}
 
 ${VERIBLE_INSTALL}: | ${VERIBLE_DIR}
@@ -21,12 +22,12 @@ ${VERIBLE_INSTALL}: | ${VERIBLE_DIR}
 	if [ "${VERIBLE_REV}" = "" ]; then \
 		cd ${VERIBLE_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+			git checkout -f master;\
 	else \
 		cd ${VERIBLE_DIR}; \
 			git fetch; \
-        	git checkout -f ${VERIBLE_REV};\
-    fi
+			git checkout -f ${VERIBLE_REV};\
+	fi
 	cd ${VERIBLE_DIR}; \
 		export PATH=${FLEX_INSTALL}/bin:${BAZEL_RELEASE}/bin:${PATH}; \
 		bazel sync;\
@@ -42,7 +43,8 @@ VERIBLE_GRELEASE:
 
 
 verible_module: ${VERIBLE_INSTALL}
-	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${VERIBLE_NAME};\
 	export REV=${VERIBLE_REV};\
 	export RELEASE=${VERIBLE_RELEASE};\
