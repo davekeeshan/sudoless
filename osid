@@ -1,1 +1,12 @@
-echo "rocky8_x86"
+#!/usr/bin/bash
+ID=`grep "^ID=" /etc/os-release | sed 's/ID=//'`
+VERSION_ID=`grep "^=VERSION_ID" /etc/os-release | sed 's/VERSION_ID=//'`
+
+if [ ${ID} == "rhel" ] ; then
+    VERSION=8
+    OSID="redhat${VERSION}_x86"
+else
+    OSID="${ID}_x86"
+fi
+
+echo ${OSID}
