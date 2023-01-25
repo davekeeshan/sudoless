@@ -1,9 +1,14 @@
 # Use this commmand
 # make verilator FLEX_REV=flex-2.5.39
+# sudo apt-get install git perl python3 make autoconf g++ flex bison ccache -y
+# sudo apt-get install libgoogle-perftools-dev numactl perl-doc -y
+# sudo apt-get install libfl2  -y
+# sudo apt-get install libfl-dev  -y
+# sudo apt-get install zlibc zlib1g zlib1g-dev -y
 VERILATOR_REPO     := https://github.com/verilator/verilator.git
 # VERILATOR_HEAD     ?= $(shell git ls-remote ${VERILATOR_REPO} | head -1 | awk '{print $$1}')
 # VERILATOR_REV      ?= ${VERILATOR_HEAD}
-VERILATOR_REV      ?= v5.002
+VERILATOR_REV      ?= v5.006
 VERILATOR_NAME     := verilator
 VERILATOR_INSTALL  := ${INSTALL_DIR}/${VERILATOR_NAME}/${VERILATOR_REV}
 VERILATOR_DIR      := ${DOWNLOAD_DIR}/verilator-git
@@ -12,7 +17,7 @@ VERILATOR_RELEASE  := 0
 ${VERILATOR_NAME}_clean:
 	rm -rf ${VERILATOR_INSTALL}
 
-${VERILATOR_NAME}: mkdir_install gcc bison flex python | ${VERILATOR_INSTALL}
+${VERILATOR_NAME}: mkdir_install gcc bison flex python help2man | ${VERILATOR_INSTALL}
 
 ${VERILATOR_DIR}: 
 	@echo "Folder ${VERILATOR_DIR} does not exist"
@@ -30,7 +35,7 @@ ${VERILATOR_INSTALL}: | ${VERILATOR_DIR}
                         git checkout -f ${VERILATOR_REV};\
                 fi
 	cd ${VERILATOR_DIR}; \
-		export PATH=${FLEX_INSTALL}/bin:${BISON_INSTALL}/bin:${PATH}; \
+		export PATH=${FLEX_INSTALL}/bin:${BISON_INSTALL}/bin:${HELP2MAN_INSTALL}/bin:${PATH}; \
 		autoconf; \
 		./configure --prefix=${VERILATOR_INSTALL}; \
 		make clean; \
