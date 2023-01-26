@@ -6,6 +6,8 @@ sudo apt install libx11-dev libxt-dev libmotif-dev libxpm-dev libpcre3-dev -y
 sudo apt install tigervnc-standalone-server tigervnc-xorg-extension tigervnc-viewer -y
 sudo apt install nedit openssh-server nfs-common -y
 sudo apt install libncurses5 libtinfo5 libncurses5-dev libncursesw5-dev ncurses-compat-libs -y
+sudo apt install default-jdk default-jre -y
  # sudo apt install device-tree-compiler -y
+sudo apt install libbz2-dev libgtk-3-dev -y 
 
 ./setup_groups.sh
