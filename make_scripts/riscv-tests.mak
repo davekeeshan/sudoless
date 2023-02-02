@@ -6,9 +6,9 @@ RISCVTESTS_DIR      := ${DOWNLOAD_DIR}/${RISCVTESTS_NAME}-git
 
 
 ${RISCVTESTS_NAME}_clean:
-	rm -rf $(RISCVTESTS_INSTALL)
+	rm -rf ${RISCVTESTS_INSTALL}
     
-${RISCVTESTS_NAME}: mkdir_install make autoconf | $(RISCVTESTS_INSTALL)
+${RISCVTESTS_NAME}: mkdir_install make autoconf ${RISCVTOOLCHAIN_NAME} | ${RISCVTESTS_INSTALL}
 
 ${RISCVTESTS_DIR}:
 	@echo "Folder ${RISCVTESTS_INSTALL} does not exist"
