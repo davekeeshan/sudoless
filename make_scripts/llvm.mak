@@ -1,17 +1,17 @@
 LLVM_REPO     := https://github.com/llvm/llvm-project.git
-LLVM_REV      ?= llvmorg-14.0.0
-LLVM_INSTALL  := ${INSTALL_DIR}/llvm/${LLVM_REV}
+LLVM_REV      ?= llvmorg-15.0.7
+LLVM_NAME     := llvm
+LLVM_INSTALL  := ${INSTALL_DIR}/${LLVM_NAME}/${LLVM_REV}
 LLVM_DIR      := ${DOWNLOAD_DIR}/llvm-git
 
-llvm_clean:
+${LLVM_NAME}_clean:
 	rm -rf ${LLVM_INSTALL}
     
-llvm: mkdir_install gcc cmake make | ${LLVM_INSTALL}
+${LLVM_NAME}: mkdir_install gcc cmake make | ${LLVM_INSTALL}
 
 ${LLVM_DIR}:
 	@echo "Folder ${LLVM_INSTALL} does not exist"
 	git clone ${LLVM_REPO} ${LLVM_DIR}
-
 
 ${LLVM_INSTALL}: | ${LLVM_DIR}
 	@echo "Folder ${LLVM_INSTALL} does not exist"
@@ -29,7 +29,7 @@ ${LLVM_INSTALL}: | ${LLVM_DIR}
 		export PATH=${CMAKE_INSTALL}/bin:${PATH}; \
 		rm -rf build/ ; \
 		mkdir build; \
-		cmake -S llvm -B build -G "Unix Makefiles" -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_INSTALL_PREFIX=${LLVM_INSTALL}; \
+		cmake -S llvm -B build -G "Unix Makefiles" -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_INSTALL_PREFIX=${LLVM_INSTALL} -DCMAKE_BUILD_TYPE=Release; \
 		cd build; \
 		make clean; \
 		make -j ${PROCESSOR}; \

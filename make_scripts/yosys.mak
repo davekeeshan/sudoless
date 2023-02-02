@@ -1,12 +1,14 @@
 YOSYS_REPO     := https://github.com/YosysHQ/yosys.git
-YOSYS_REV      ?= yosys-0.20
-YOSYS_INSTALL  := ${INSTALL_DIR}/yosys/${YOSYS_REV}
+YOSYS_REV      ?= yosys-0.25
+YOSYS_NAME     := yosys
+YOSYS_INSTALL  := ${INSTALL_DIR}/${YOSYS_NAME}/${YOSYS_REV}
 YOSYS_DIR      := ${DOWNLOAD_DIR}/yosys-git
+YOSYS_RELEASE  := 0
 
-yosys_clean:
+${YOSYS_NAME}_clean:
 	rm -rf $(YOSYS_INSTALL)
     
-yosys: mkdir_install gcc make | $(YOSYS_INSTALL)
+${YOSYS_NAME}: mkdir_install gcc make llvm | $(YOSYS_INSTALL)
 
 ${YOSYS_DIR}:
 	@echo "Folder ${YOSYS_INSTALL} does not exist"
@@ -26,9 +28,8 @@ ${YOSYS_INSTALL}: | ${YOSYS_DIR}
     fi
 	mkdir -p ${YOSYS_DIR}
 	cd ${YOSYS_DIR}; \
-		export PATH=${LLVM_INSTALL}/bin:$(MAKE_INSTALL)/bin:${GCC_INSTALL}/bin:${PATH}; \
-		export LD_LIBRARY_PATH=${GCC_INSTALL}/lib64; \
+		export PATH=${LLVM_INSTALL}/bin:${PATH}; \
 		make clean; \
-		make; \
+		make -j ${PROCESSOR}; \
 		#make install
 #		./configure --prefix=${YOSYS_INSTALL} ; \
