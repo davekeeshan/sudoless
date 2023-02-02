@@ -6,9 +6,9 @@ YOSYS_DIR      := ${DOWNLOAD_DIR}/yosys-git
 YOSYS_RELEASE  := 0
 
 ${YOSYS_NAME}_clean:
-	rm -rf $(YOSYS_INSTALL)
+	rm -rf ${YOSYS_INSTALL}
     
-${YOSYS_NAME}: mkdir_install gcc make llvm | $(YOSYS_INSTALL)
+${YOSYS_NAME}: mkdir_install gcc make llvm tcl | ${YOSYS_INSTALL}
 
 ${YOSYS_DIR}:
 	@echo "Folder ${YOSYS_INSTALL} does not exist"
@@ -28,8 +28,21 @@ ${YOSYS_INSTALL}: | ${YOSYS_DIR}
     fi
 	mkdir -p ${YOSYS_DIR}
 	cd ${YOSYS_DIR}; \
-		export PATH=${LLVM_INSTALL}/bin:${PATH}; \
+		export PATH=${LLVM_INSTALL}/bin:${TCL_INSTALL}/bin:${PATH}; \
 		make clean; \
 		make -j ${PROCESSOR}; \
-		#make install
-#		./configure --prefix=${YOSYS_INSTALL} ; \
+		make install PREFIX=${YOSYS_INSTALL}
+	${MAKE} ${YOSYS_NAME}_module
+
+${YOSYS_NAME}_module: ${YOSYS_INSTALL}
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
+	export TOOL=${YOSYS_NAME};\
+	export REV=${YOSYS_REV};\
+	export RELEASE=${YOSYS_RELEASE};\
+		./module_setup.sh
+
+# sudo apt-get install build-essential clang bison flex \
+# 	libreadline-dev gawk tcl-dev libffi-dev git \
+# 	graphviz xdot pkg-config python3 libboost-system-dev \
+# 	libboost-python-dev libboost-filesystem-dev zlib1g-dev
