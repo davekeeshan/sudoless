@@ -8,7 +8,7 @@ YOSYS_RELEASE  := 0
 ${YOSYS_NAME}_clean:
 	rm -rf ${YOSYS_INSTALL}
     
-${YOSYS_NAME}: mkdir_install gcc make llvm tcl | ${YOSYS_INSTALL}
+${YOSYS_NAME}: mkdir_install gcc make llvm tcl readline libffi flex bison | ${YOSYS_INSTALL}
 
 ${YOSYS_DIR}:
 	@echo "Folder ${YOSYS_INSTALL} does not exist"
@@ -26,12 +26,18 @@ ${YOSYS_INSTALL}: | ${YOSYS_DIR}
 			git fetch; \
         	git checkout -f ${YOSYS_REV};\
     fi
-	mkdir -p ${YOSYS_DIR}
 	cd ${YOSYS_DIR}; \
-		export PATH=${LLVM_INSTALL}/bin:${TCL_INSTALL}/bin:${PATH}; \
+		export PATH=${LLVM_INSTALL}/bin:${FLEX_INSTALL}/bin:${BISON_INSTALL}/bin:${PATH}; \
+		export CXXFLAGS="-I${READLINE_INSTALL}/include"; \
+		export CFLAGS=-I${READLINE_INSTALL}/include; \
+		export LDFLAGS="-I${READLINE_INSTALL}/lib"; \
+		export PKG_CONFIG_PATH=${LIBFFI_INSTALL}/lib/pkgconfig; \
+		export TCL_INCLUDE=${TCL_INSTALL}/include; \
+		export PREFIX=${YOSYS_INSTALL}; \
 		make clean; \
-		make -j ${PROCESSOR}; \
-		make install PREFIX=${YOSYS_INSTALL}
+		rm -rf abc/; \
+		make -j ${PROCESSOR} ; \
+		make install
 	${MAKE} ${YOSYS_NAME}_module
 
 ${YOSYS_NAME}_module: ${YOSYS_INSTALL}
