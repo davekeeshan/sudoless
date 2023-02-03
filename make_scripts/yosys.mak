@@ -45,6 +45,7 @@ ${YOSYS_NAME}_module: ${YOSYS_INSTALL}
 	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${YOSYS_NAME};\
 	export REV=${YOSYS_REV};\
+	export EXTRA_OPTS="    prepend-path     LD_LIBRARY_PATH ${LIBFFI_INSTALL}/lib64";\
 	export RELEASE=${YOSYS_RELEASE};\
 		./module_setup.sh
 
