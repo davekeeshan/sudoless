@@ -33,8 +33,17 @@ ${QEMU_INSTALL}: | ${QEMU_DIR}
 		pip install ninja; \
 		git submodule init ; \
 		git submodule update --recursive ; \
-		./configure -prefix=${QEMU_INSTALL} ; \
+		./configure --prefix=${QEMU_INSTALL} ; \
 		make clean; \
 		make -j ${PROCESSOR}; \
-		#make install
+		make install
 	${MAKE} pydeactivate
+	${MAKE} ${QEMU_NAME}_module
+
+${QEMU_NAME}_module: ${QEMU_INSTALL}
+	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
+	export INSTALL_DIR=${INSTALL_DIR};\
+	export TOOL=${QEMU_NAME};\
+	export REV=${QEMU_REV};\
+	export RELEASE=${QEMU_RELEASE};\
+		./module_setup.sh
