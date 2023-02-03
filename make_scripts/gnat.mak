@@ -5,7 +5,7 @@ GNAT_DIR           := ${DOWNLOAD_DIR}/gnat-${GNAT_REV}
 gnat_clean:
 	rm -rf ${GNAT_INSTALL}
 
-gnat: mkdir_install gcc make | ${GNAT_INSTALL}
+gnat: mkdir_install  | ${GNAT_INSTALL}
 
 ${GNAT_DIR}:
 	@echo "Folder ${GNAT_DIR} does not exist"
