@@ -12,10 +12,10 @@ IVERILOG_INSTALL  := ${INSTALL_DIR}/${IVERILOG_NAME}/${IVERILOG_REV}
 IVERILOG_DIR      := ${DOWNLOAD_DIR}/iverilog-git
 IVERILOG_RELEASE  := 0
 
-iverilog_clean:
+${IVERILOG_NAME}_clean:
 	rm -rf ${IVERILOG_INSTALL}
 
-iverilog: mkdir_install gcc gperf bison flex | $(IVERILOG_INSTALL)
+${IVERILOG_NAME}: mkdir_install gcc gperf bison flex | $(IVERILOG_INSTALL)
 
 ${IVERILOG_DIR}: 
 	@echo "Folder ${IVERILOG_DIR} does not exist"
@@ -43,7 +43,7 @@ $(IVERILOG_INSTALL): | ${IVERILOG_DIR}
 		make install      
 	${MAKE} iverilog_module
 
-iverilog_module: ${IVERILOG_INSTALL}
+${IVERILOG_NAME}_module: ${IVERILOG_INSTALL}
 	@export MODULEFILE_DIR=${MODULEFILE_DIR};\
 	export INSTALL_DIR=${INSTALL_DIR};\
 	export TOOL=${IVERILOG_NAME};\
