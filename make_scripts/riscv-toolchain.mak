@@ -1,10 +1,12 @@
-RISCVTOOLCHAIN_ARCH     := dual
+RISCVTOOLCHAIN_ARCH     := multilib
 RISCVTOOLCHAIN_NAME     := riscv-toolchain
 RISCVTOOLCHAIN_REPO     := https://github.com/riscv/riscv-gnu-toolchain
-RISCVTOOLCHAIN_REV      ?= 2022.11.23
+RISCVTOOLCHAIN_REV      ?= 2023.01.04
 RISCVTOOLCHAIN_INSTALL  := ${INSTALL_DIR}/${RISCVTOOLCHAIN_NAME}/${RISCVTOOLCHAIN_REV}-${RISCVTOOLCHAIN_ARCH}
+#RISCVTOOLCHAIN_INSTALL  := ${INSTALL_DIR}/${RISCVTOOLCHAIN_NAME}/${RISCVTOOLCHAIN_REV}
 RISCVTOOLCHAIN_DIR      := ${DOWNLOAD_DIR}/${RISCVTOOLCHAIN_NAME}-git
-RISCVTOOLCHAIN_MAKEOPTS := linux
+#RISCVTOOLCHAIN_MAKEOPTS := linux
+RISCVTOOLCHAIN_MAKEOPTS := 
 
 ifeq ($(RISCVTOOLCHAIN_ARCH), 64)
 	RISCVTOOLCHAIN_EXTRA := 
@@ -28,12 +30,12 @@ ${RISCVTOOLCHAIN_INSTALL}: | ${RISCVTOOLCHAIN_DIR}
 	if [ "${RISCVTOOLCHAIN_REV}" = "" ]; then \
 		cd ${RISCVTOOLCHAIN_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+			git checkout -f master;\
 	else \
 		cd ${RISCVTOOLCHAIN_DIR}; \
 			git fetch; \
-        	git checkout -f ${RISCVTOOLCHAIN_REV};\
-    fi
+			git checkout -f ${RISCVTOOLCHAIN_REV};\
+	fi
 	rm -rf ${RISCVTOOLCHAIN_DIR}/build
 	mkdir -p ${RISCVTOOLCHAIN_DIR}/build
 	cd ${RISCVTOOLCHAIN_DIR}/build; \
@@ -41,5 +43,5 @@ ${RISCVTOOLCHAIN_INSTALL}: | ${RISCVTOOLCHAIN_DIR}
 		../configure --prefix=${RISCVTOOLCHAIN_INSTALL} ${RISCVTOOLCHAIN_EXTRA}; \
 		make clean; \
 		make -j ${PROCESSOR} ${RISCVTOOLCHAIN_MAKEOPTS}; \
-		#make install
+		make install
 
