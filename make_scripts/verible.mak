@@ -1,6 +1,6 @@
 VERIBLE_REPO      := https://github.com/chipsalliance/verible.git
-#VERIBLE_REV       ?= $(shell git ls-remote ${VERIBLE_REPO} | head -1 | awk '{print $$1}')
-VERIBLE_REV       ?= v0.0-2653-g642f741a
+VERIBLE_REV       ?= $(shell git ls-remote ${VERIBLE_REPO} | head -1 | awk '{print $$1}')
+#VERIBLE_REV       ?= v0.0-2653-g642f741a
 VERIBLE_NAME      := verible
 VERIBLE_INSTALL   := ${INSTALL_DIR}/${VERIBLE_NAME}/${VERIBLE_REV}
 VERIBLE_DIR       := ${DOWNLOAD_DIR}/verible-git

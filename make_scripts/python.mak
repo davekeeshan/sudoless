@@ -1,6 +1,6 @@
 # make python PYTHON_REV=v3.10.4
 CWD               ?= ${PWD}
-PYTHON_REV        ?= v3.10.7
+PYTHON_REV        ?= v3.10.11
 PYTHON_NAME       := python
 PYTHON_INSTALL    := ${INSTALL_DIR}/${PYTHON_NAME}/${PYTHON_REV}
 PYTHON_DIR        := ${DOWNLOAD_DIR}/cpython-git
@@ -62,23 +62,20 @@ ifeq (${SYSTEM_PYTHON}, 0)
                         git checkout -f ${PYTHON_REV};\
         fi
 	cd ${PYTHON_DIR}; \
-		export CFLAGS="-I${BZIP2_INSTALL}/include -I${XY_INSTALL}/include -I${NCURSES_INSTALL}/usr/include"; \
-		export LDFLAGS="-Wl,-rpath=${OPENSSL_INSTALL}/lib,-rpath=${LIBFFI_INSTALL}/lib64,-rpath=${SQLITE_INSTALL}/lib,-rpath=${BZIP2_INSTALL}/lib,-rpath=${XY_INSTALL}/lib,-rpath=${TCL_INSTALL}/lib,-rpath=${TK_INSTALL}/lib,-rpath=${NCURSES_INSTALL}/usr/lib -L${LIBFFI_INSTALL}/lib64 -L${BZIP2_INSTALL}/lib -L${XY_INSTALL}/lib -L${NCURSES_INSTALL}/usr/lib"; \
-		export PKG_CONFIG_PATH="${LIBFFI_INSTALL}/lib/pkgconfig:${XY_INSTALL}/lib/pkgconfig"; \
+		export CFLAGS="-I${BZIP2_INSTALL}/include -I${NCURSES_INSTALL}/usr/include"; \
+		export LDFLAGS="-Wl,-rpath=${LIBFFI_INSTALL}/lib64,-rpath=${BZIP2_INSTALL}/lib,-rpath=${NCURSES_INSTALL}/usr/lib -L${LIBFFI_INSTALL}/lib64 -L${BZIP2_INSTALL}/lib -L${NCURSES_INSTALL}/usr/lib"; \
+		export PKG_CONFIG_PATH="${LIBFFI_INSTALL}/lib/pkgconfig:${OPENSSL_INSTALL}/lib/pkgconfig:${SQLITE_INSTALL}/lib/pkgconfig:${XY_INSTALL}/lib/pkgconfig:${TCL_INSTALL}/lib/pkgconfig:${TK_INSTALL}/lib/pkgconfig"; \
 		rm -rf build; mkdir build; \
 		make clean; \
-		sed -i "s|'\/usr\/local\/include\/sqlite3',|'\/usr\/local\/include\/sqlite3',\n                             '${SQLITE_INSTALL}\/include',|g" setup.py; \
                 ./configure \
 			--with-ensurepip=install \
 			--enable-shared \
+                        --with-libs=-lpaneltw \
 			--prefix=${PYTHON_INSTALL} \
 			--with-openssl=${OPENSSL_INSTALL} \
-			--with-tcltk-includes='-I${TCL_INSTALL}/include -I${TK_INSTALL}/include' \
-			--with-tcltk-libs='-L${TCL_INSTALL}/lib -L${TK_INSTALL}/lib -ltcl8.6 -ltk8.6' \
                         --enable-optimizations \
                         --with-computed-gotos=yes \
                         --with-dbmliborder=gdbm:ndbm:bdb \
-                        --enable-loadable-sqlite-extensions \
 			--without-static-libpython ; \
                 make -j ${PROCESSOR} ;\
 		make install

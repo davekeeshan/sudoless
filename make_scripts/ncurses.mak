@@ -18,19 +18,15 @@ ${NCURSES_INSTALL}: | ${NCURSES_DIR}
 	if [ "${NCURSES_REV}" = "" ]; then \
 		cd ${NCURSES_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+                        git checkout -f master;\
 	else \
 		cd ${NCURSES_DIR}; \
 			git fetch; \
-        	git checkout -f ${NCURSES_REV};\
-    fi
+                        git checkout -f ${NCURSES_REV};\
+        fi
 	mkdir -p ${NCURSES_DIR}/objdir
 	cd ${NCURSES_DIR}/objdir; \
-		export PATH=$(MAKE_INSTALL)/bin:${GCC_INSTALL}/bin:${PATH}; \
-		../configure --with-install-prefix=${NCURSES_INSTALL}; \
+		../configure --with-install-prefix=${NCURSES_INSTALL} --enable-pc-files; \
 		make clean; \
 		make; \
 		make install
-
-
-#		../configure --with-install-prefix=${NCURSES_INSTALL}; \
