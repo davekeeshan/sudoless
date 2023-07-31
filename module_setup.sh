@@ -44,6 +44,8 @@ echo -e "\
 \nset TOOL \"${TOOL}\"\
 \nset TOOL_DIR \"\${INSTALL_DIR}/\${TOOL}/\${REV}\"\
 \n\
+\nmodule unload \${TOOL}\
+\n\
 \nif { [file isdirectory \${TOOL_DIR}] } {\
 " > ${FILE}
 if [ ${ADD_PATH} == 1 ] ; then
