@@ -1,5 +1,5 @@
 YOSYS_REPO     := https://github.com/YosysHQ/yosys.git
-YOSYS_REV      ?= yosys-0.25
+YOSYS_REV      ?= yosys-0.30
 YOSYS_NAME     := yosys
 YOSYS_INSTALL  := ${INSTALL_DIR}/${YOSYS_NAME}/${YOSYS_REV}
 YOSYS_DIR      := ${DOWNLOAD_DIR}/yosys-git
@@ -20,12 +20,12 @@ ${YOSYS_INSTALL}: | ${YOSYS_DIR}
 	if [ "${YOSYS_REV}" = "" ]; then \
 		cd ${YOSYS_DIR}; \
 			git fetch; \
-        	git checkout -f master;\
+			git checkout -f master;\
 	else \
 		cd ${YOSYS_DIR}; \
 			git fetch; \
-        	git checkout -f ${YOSYS_REV};\
-    fi
+			git checkout -f ${YOSYS_REV};\
+	fi
 	cd ${YOSYS_DIR}; \
 		export PATH=${LLVM_INSTALL}/bin:${FLEX_INSTALL}/bin:${BISON_INSTALL}/bin:${PATH}; \
 		export CXXFLAGS="-I${READLINE_INSTALL}/include"; \

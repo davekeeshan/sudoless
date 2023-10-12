@@ -1,5 +1,5 @@
 MODULES_REPO     := https://github.com/cea-hpc/modules.git
-MODULES_REV      ?= v5.1.0
+MODULES_REV      ?= v5.3.1
 MODULES_INSTALL  := ${INSTALL_DIR}/modules/${MODULES_REV}
 MODULES_DIR      := ${DOWNLOAD_DIR}/modules-git
 MODULEFILE_DIR   ?= ${INSTALL_DIR}/../modules_config/modules_common
